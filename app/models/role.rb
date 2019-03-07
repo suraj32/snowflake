@@ -2,7 +2,8 @@ class Role
   include Mongoid::Document
   field :name, type: String
 
-  embeds_many :users
+  has_many :users
+  embeds_many :track_categories
 
-  validates :name, uniqueness: true
+  validates :name, presence: true, uniqueness: true
 end

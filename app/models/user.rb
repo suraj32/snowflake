@@ -5,9 +5,10 @@ class User
   field :password, type: String
   field :mobile_no, type: Integer
 
-  embedded_in :roles
+  has_many :assessment_results
+  belongs_to :role
 
-  validates :email, uniqueness: true, format: {with: /\A.+@#{"joshsoftware.com"}/, message: "Only #{"joshsoftware.com"} email-id is allowed."}
-  validates :name, presence: true
-  validates :mobile_no, length: { is: 10 }
+  validates :name, presence: true, length: { minimum: 6 }
+  validates :email, presence: true, uniqueness: true, format: {with: /\A.+@#{"joshsoftware.com"}/, message: "Only #{"joshsoftware.com"} email-id is allowed."}
+  validates :mobile_no, length: { is: 10 }, allow_nil: true
 end

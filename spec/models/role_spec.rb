@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Role do
-	describe 'Validations' do
-	  role = FactoryBot.create(:role)
-		it { is_expected.to be_mongoid_document }
-		it { is_expected.to validate_uniqueness_of(:name) }
-		role1 = FactoryBot.build(:role, name: role.name)
-		it '' do
-			expect(role1.valid?).to eq false
-		end
-	end
+
+	it { should be_mongoid_document }
+
+	it { should have_many :users }
+	it { should embed_many :track_categories }
+	
+	it { should validate_presence_of(:name) }
+	it { should validate_uniqueness_of(:name) }
+
 end

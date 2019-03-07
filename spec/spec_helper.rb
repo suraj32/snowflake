@@ -14,7 +14,6 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'factory_bot_rails'
-
 require 'mongoid-rspec'
 
 RSpec.configure do |config|
