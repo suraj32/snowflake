@@ -1,0 +1,9 @@
+= simple_form_for(@upload, :html => {enctype: 'multipart/alternative'}, remote: true) do |f|
+  = f.input :select_type, collection: [ "Roles", "Track Categories", "Tracks", "Levels"]
+  = f.input :role_type, collection: []
+  = f.input :track_category_type, collection: []
+  = f.input :track_type, collection: []
+
+  = f.file_field :data
+  = f.button :submit, 'Import', class: 'btn btn-sm btn-success'
+  = link_to 'Back', root_path, class: 'btn btn-sm btn-dark'
