@@ -21,7 +21,7 @@ class UploadsController < ApplicationController
     end
     
     if @upload.save
-    	InviteAdminsJob.perform_async(@upload.id)
+    	InsertModelDataJob.perform_now(@upload.id)
       flash[:success] = "File imported successfully"
       redirect_to root_path
     else
@@ -45,7 +45,6 @@ class UploadsController < ApplicationController
   end
 
   def get_track_types
-  	byebug
   	@roles = Role.find_by(name: params[:role_type])
   	@track_categories = @roles.track_categories.find_by(name: params[:track_category_type])
   	@tracks = @track_categories.tracks.all

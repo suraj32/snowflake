@@ -20,7 +20,7 @@ class InsertModelDataJob < ApplicationJob
 	    	role = Role.find_by(name: upload.role_type)
 	    	new_csv << [ 'Name', 'Description', 'Indicators', 'Status' ]
 	    	csv.each do |row|
-	    		track_category = role.track_categories.create( name: row["Name"], description: row["Description"], indicators: row["Indicators"] )
+	    		track_category = role.track_categories.create( name: row["Name"], description: row["Description"], indicators: row["Indicators"].split(/\s*,\s*/) )
 	    		if track_category.errors.messages == {}
 	    			new_csv << [ row["Name"], row["Description"], row["Indicators"], 'Inserted' ]
 	    		else
@@ -45,7 +45,7 @@ class InsertModelDataJob < ApplicationJob
 	    	track = track_category.tracks.find_by(name: upload.track_type)
 	    	new_csv << [ 'Seq. no', 'Description', 'Example behaviour', 'Example task', 'Status' ]
 	    	csv.each do |row|
-	    		level = track.levels.create( seq_no: row["Seq. no"], description: row["Description"], example_behaviour: row["Example behaviour"], example_task: row["Example task"] )
+	    		level = track.levels.create( seq_no: row["Seq. no"], description: row["Description"], example_behaviour: row["Example behaviour"].split(/\s*,\s*/), example_task: row["Example task"].split(/\s*,\s*/) )
 	    		if level.errors.messages == {}
 	    			new_csv << [ row["Seq. no"], row["Description"], row["Example behaviour"], row["Example task"], 'Inserted' ]
 	    		else
@@ -54,5 +54,6 @@ class InsertModelDataJob < ApplicationJob
 	    	end
 	    end
   	end
+  	UserMailer.with(content: new_csv).send_csv_report.deliver_now
   end
 end

@@ -1,4 +1,4 @@
-= simple_form_for(@upload, :html => {enctype: 'multipart/alternative'}, remote: true) do |f|
+= simple_form_for(@upload, :html => {enctype: 'multipart/alternative'}) do |f|
   = f.input :select_type, collection: [ "Roles", "Track Categories", "Tracks", "Levels"]
   = f.input :role_type, collection: []
   = f.input :track_category_type, collection: []
