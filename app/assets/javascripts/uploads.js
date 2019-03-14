@@ -67,8 +67,8 @@ $(document).on('ready', function(){
     		 }
   			}
 			});
-			var roleType = $("#upload_role_type").val();
 			$("#upload_role_type").change(function(){
+				var roleType = $("#upload_role_type").val();
 				$.ajax({
   				url: 'uploads/get_track_category_types',
   				data: { type: roleType },
@@ -80,13 +80,14 @@ $(document).on('ready', function(){
 				});
 			});
 			$("#upload_track_category_type").change(function(){
+				var roleType = $("#upload_role_type").val();
 				var trackCategoryType = $("#upload_track_category_type").val();
 				$.ajax({
   				url: 'uploads/get_track_types',
   				data: { role_type: roleType, track_category_type: trackCategoryType },
   				success: function(data, textStatus, jqXHR) {
     		 		for(i in data){
-    		 			$("#upload_track_category_type").append("<option>"+data[i].name+"</option>")
+    		 			$("#upload_track_type").append("<option>"+data[i].name+"</option>")
     		 		}
   				}
 				});

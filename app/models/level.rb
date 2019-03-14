@@ -8,5 +8,4 @@ class Level
   embedded_in :track
 
   validates :seq_no, presence: true
-  validates :description, presence: true, length: { in: 10..500 }
 end
