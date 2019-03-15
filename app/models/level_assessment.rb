@@ -8,5 +8,7 @@ class LevelAssessment
   field :updated_by, type: String
   field :Comments, type: String
 
-  embedded_in :assessment_result
+  belongs_to :assessment_result
+
+  validates :user_id, :role_id, :track_category_id, :track_id, :level_id, :updated_by, presence: true
 end

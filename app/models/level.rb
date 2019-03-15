@@ -5,7 +5,7 @@ class Level
   field :example_behaviour, type: Array
   field :example_task, type: Array
 
-  embedded_in :track
+  belongs_to :track
 
   validates :seq_no, presence: true
 end

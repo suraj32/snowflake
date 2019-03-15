@@ -10,6 +10,7 @@ RSpec.describe User do
   it { should validate_length_of(:mobile_no) }
 
   it { should have_many(:assessment_results) }
+  it { should belong_to(:role) }
 
   describe 'validate email format' do
     context 'when wrong email format is provided' do

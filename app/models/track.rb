@@ -3,8 +3,8 @@ class Track
   field :name, type: String
   field :description, type: String
 
-  embeds_many :levels
-  embedded_in :track_category
+  has_many :levels
+  belongs_to :track_category
 
   validates :name, presence: true, uniqueness: true
 end

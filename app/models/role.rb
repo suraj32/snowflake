@@ -3,7 +3,7 @@ class Role
   field :name, type: String
 
   has_many :users
-  embeds_many :track_categories
+  has_many :track_categories
 
   validates :name, presence: true, uniqueness: true
 end
