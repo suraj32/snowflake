@@ -4,9 +4,9 @@ class InsertModelDataJob < ApplicationJob
 
   def perform( upload_id )
     upload = Upload.find( upload_id )
-    csv = CSV.parse( upload.data, :headers => true )
+    csv = CSV.parse( upload.file.path, :headers => true )
     new_csv = CSV.generate do |new_csv|
-	    if( upload.select_type == 'Roles' )
+	    if( upload.type_of_file == 'Roles' )
 	    	new_csv << [ 'Name', 'Status' ]
 	    	csv.each do |row|
 	    		role = Role.create( name: row["Name"] )
@@ -16,7 +16,7 @@ class InsertModelDataJob < ApplicationJob
 	    			new_csv << [ row["Name"], 'Name #{role.errors.messages[:name].join()}' ]
 	    		end
 	    	end
-	    elsif( upload.select_type == 'Track Categories' )
+	    elsif( upload.type_of_file == 'Track Categories' )
 	    	role = Role.find_by(name: upload.role_type)
 	    	new_csv << [ 'Name', 'Description', 'Indicators', 'Status' ]
 	    	csv.each do |row|
@@ -27,7 +27,7 @@ class InsertModelDataJob < ApplicationJob
 	    			new_csv << [ row["Name"], row["Description"], row["Indicators"], 'Name #{role.errors.messages[:name].join()}' ]
 	    		end
 	    	end
-	    elsif( upload.select_type == 'Tracks' )
+	    elsif( upload.type_of_file == 'Tracks' )
 	    	role = Role.find_by(name: upload.role_type)
 	    	track_category = role.track_categories.find_by(name: upload.track_category_type)
 	    	new_csv << [ 'Name', 'Description', 'Status' ]
@@ -39,7 +39,7 @@ class InsertModelDataJob < ApplicationJob
 	    			new_csv << [ row["Name"], row["Description"], 'Name #{track.errors.messages[:name].join()}' ]
 	    		end
 	    	end
-	    elsif( upload.select_type == 'Levels' )
+	    elsif( upload.type_of_file == 'Levels' )
 	    	role = Role.find_by(name: upload.role_type)
 	    	track_category = role.track_categories.find_by(name: upload.track_category_type)
 	    	track = track_category.tracks.find_by(name: upload.track_type)
