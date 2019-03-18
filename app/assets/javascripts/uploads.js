@@ -8,89 +8,54 @@ $(document).on('ready', function(){
 	$(".upload_track").hide();
 	$("#upload_type_of_file").change(function(){
 		var type_of_file = $("#upload_type_of_file").val();
-		if(type_of_file == "Roles")
+		if( type_of_file == "Roles" || type_of_file == "Track Categories" || type_of_file == "Tracks" || type_of_file == "Levels" )
 		{
 			$(".upload_role").hide();
 			$(".upload_track_category").hide();
 			$(".upload_track").hide();
 		}
-		else if(type_of_file == "Track Categories")
+		if( type_of_file == "Track Categories" || type_of_file == "Tracks" || type_of_file == "Levels" )
 		{
 			$.ajax({
   			url: 'uploads/get_roles',
   			success: function(data, textStatus, jqXHR) {
-    		 for(i in data){
-    		 		$("#upload_role").append("<option>"+data[i].name+"</option>")
+    		  for(i in data){
+    		 		$("#upload_role").append("<option value="+data[i]._id.$oid+">"+data[i].name+"</option>")
     		 }
   			}
 			});
 			$(".upload_role").show();
-			$(".upload_track_category").hide();
-			$(".upload_track").hide();
 		}
-		else if(type_of_file == "Tracks")
+		if( type_of_file == "Tracks" || type_of_file == "Levels" )
 		{
-			$.ajax({
-  			url: 'uploads/get_roles',
-  			success: function(data, textStatus, jqXHR) {
-    		 for(i in data){
-    		 		$("#upload_role").append("<option>"+data[i].name+"</option>")
-    		 }
-  			}
-			});
 			$("#upload_role").change(function(){
-				var roleType = $("#upload_role").val();
+				var role_id = $("#upload_role").val();
 				$.ajax({
   				url: 'uploads/get_track_categories',
-  				data: { type: roleType },
+  				data: { id: role_id },
   				success: function(data, textStatus, jqXHR) {
     		 		for(i in data){
-    		 			$("#upload_track_category").append("<option>"+data[i].name+"</option>")
+    		 			$("#upload_track_category").append("<option value="+data[i]._id.$oid+">"+data[i].name+"</option>")
     		 		}
   				}
 				});
 			});
-			$(".upload_role").show();
 			$(".upload_track_category").show();
-			$(".upload_track").hide();
 		}
-		else if(type_of_file == "Levels")
+		if( type_of_file == "Levels" )
 		{
-			$.ajax({
-  			url: 'uploads/get_roles',
-  			success: function(data, textStatus, jqXHR) {
-    		 for(i in data){
-    		 		$("#upload_role").append("<option>"+data[i].name+"</option>")
-    		 }
-  			}
-			});
-			$("#upload_role").change(function(){
-				var roleType = $("#upload_role").val();
-				$.ajax({
-  				url: 'uploads/get_track_categories',
-  				data: { type: roleType },
-  				success: function(data, textStatus, jqXHR) {
-    		 		for(i in data){
-    		 			$("#upload_track_category").append("<option>"+data[i].name+"</option>")
-    		 		}
-  				}
-				});
-			});
 			$("#upload_track_category").change(function(){
-				var roleType = $("#upload_role").val();
-				var trackCategoryType = $("#upload_track_category").val();
+				var track_category_id = $("#upload_track_category").val();
 				$.ajax({
   				url: 'uploads/get_tracks',
-  				data: { role_type: roleType, track_category_type: trackCategoryType },
+  				data: { id: track_category_id },
   				success: function(data, textStatus, jqXHR) {
     		 		for(i in data){
-    		 			$("#upload_track").append("<option>"+data[i].name+"</option>")
+    		 			$("#upload_track").append("<option value="+data[i]._id.$oid+">"+data[i].name+"</option>")
     		 		}
   				}
 				});
 			});
-			$(".upload_role").show();
-			$(".upload_track_category").show();
 			$(".upload_track").show();
 		}
 	});

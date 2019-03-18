@@ -15,9 +15,10 @@ class UploadsController < ApplicationController
     @upload = Upload.new(upload_params)
     if @upload.save
     	InsertModelDataJob.perform_now(@upload.id)
-      flash[:success] = "File #{@upload.id} imported successfully"
+      flash[:success] = "File imported successfully"
       redirect_to root_path
     else
+      flash[:error] = "Please select type and file"
       render 'new'
     end
   end
@@ -25,24 +26,23 @@ class UploadsController < ApplicationController
   def get_roles
   	@roles = Role.all
   	respond_to do |format|
-  		format.json { render json: @roles.as_json(only: [:name]) }
+  		format.json { render json: @roles.as_json(only: [:_id, :name]) }
   	end
   end
 
   def get_track_categories
-  	@roles = Role.find_by(name: params[:type])
-  	@track_categories = @roles.track_categories
+  	@role = Role.find( params[:id] )
+  	@track_categories = @role.track_categories
   	respond_to do |format|
-  		format.json { render json: @track_categories.as_json(only: [:name]) }
+  		format.json { render json: @track_categories.as_json(only: [:_id, :name]) }
   	end
   end
 
   def get_tracks
-  	@roles = Role.find_by(name: params[:role_type])
-  	@track_categories = @roles.track_categories.find_by(name: params[:track_category_type])
-  	@tracks = @track_categories.tracks
+  	@track_category = TrackCategory.find( params[:id] )
+  	@tracks = @track_category.tracks
   	respond_to do |format|
-  		format.json { render json: @tracks.as_json(only: [:name]) }
+  		format.json { render json: @tracks.as_json(only: [:_id, :name]) }
   	end
   end
 

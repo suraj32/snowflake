@@ -8,13 +8,9 @@ class Upload
   belongs_to :track, optional: true
 
   validates :file, presence: true
-  validates :role, presence: true, if: :file_type_roles?
-  validates :track_category, presence: true, if: :file_type_track_categories?
-  validates :track, presence: true, if: :file_type_tracks?
-
-  def file_type_roles?
-  	type_of_file == 'Roles'
-  end
+  validates :role, presence: true, if: :file_type_track_categories?
+  validates :role, :track_category, presence: true, if: :file_type_tracks?
+  validates :role, :track_category, :track, presence: true, if: :file_type_levels?
 
   def file_type_track_categories?
   	type_of_file == 'Track Categories'
@@ -22,5 +18,9 @@ class Upload
 
   def file_type_tracks?
    	type_of_file == 'Tracks'
-  end 
+  end
+
+  def file_type_levels?
+    type_of_file == 'Levels'
+  end
 end
