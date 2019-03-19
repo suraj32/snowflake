@@ -7,5 +7,5 @@ class Level
 
   belongs_to :track
 
-  validates :seq_no, presence: true
+  validates :seq_no, presence: true, uniqueness: true
 end

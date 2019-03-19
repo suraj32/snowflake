@@ -10,5 +10,6 @@ class LevelAssessment
 
   belongs_to :assessment_result
 
-  validates :user_id, :role_id, :track_category_id, :track_id, :level_id, :updated_by, presence: true
+  validates :user_id, :role_id, :track_category_id,
+   :track_id, :level_id, :updated_by, presence: true
 end

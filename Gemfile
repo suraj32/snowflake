@@ -42,7 +42,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # gem 'rspec-rails'
-	# gem 'rspec-rails', github: 'rspec/rspec-rails', ref: '0d0ce9e'
+  # gem 'rspec-rails', github: 'rspec/rspec-rails', ref: '0d0ce9e'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'mongoid-rspec'

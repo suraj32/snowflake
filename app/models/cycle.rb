@@ -8,5 +8,6 @@ class Cycle
 
   has_many :assessment_results
 
-  validates :emp_duration_start, :emp_duration_end, :manager_duration_start, :manager_duration_end, :is_open, presence: true
+  validates :emp_duration_start, :emp_duration_end, :manager_duration_start,
+   :manager_duration_end, :is_open, presence: true
 end

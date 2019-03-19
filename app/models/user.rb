@@ -9,6 +9,8 @@ class User
   belongs_to :role
 
   validates :name, presence: true, length: { minimum: 6 }
-  validates :email, presence: true, uniqueness: true, format: {with: /\A.+@#{"joshsoftware.com"}/, message: "Only #{"joshsoftware.com"} email-id is allowed."}
+  validates :email, presence: true, uniqueness: true,
+   format: {with: /\A.+@#{"joshsoftware.com"}/,
+   message: "Only #{"joshsoftware.com"} email-id is allowed."}
   validates :mobile_no, length: { is: 10 }, allow_nil: true
 end
