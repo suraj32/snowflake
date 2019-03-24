@@ -3,6 +3,7 @@
   = f.input :role, as: :select, collection: []
   = f.input :track_category, as: :select, collection: []
   = f.input :track, as: :select, collection: []
-  = f.file_field :file
+  = f.hint '', id: 'allowed_column_headers'
+  = f.file_field :input_file
   = f.button :submit, 'Import', class: 'btn btn-sm btn-success'
   = link_to 'Back', root_path, class: 'btn btn-sm btn-dark' 

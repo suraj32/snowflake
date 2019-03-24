@@ -15,10 +15,9 @@ class UploadsController < ApplicationController
     @upload = Upload.new(upload_params)
     if @upload.save
       InsertModelDataJob.perform_now(@upload.id)
-      flash[:success] = "File imported successfully"
+      flash[:success] = "File uploaded successfully"
       redirect_to root_path
     else
-      flash[:error] = "Please select type and file"
       render 'new'
     end
   end
@@ -54,7 +53,7 @@ class UploadsController < ApplicationController
 
   private
     def upload_params
-      params.require(:upload).permit(:file, :type_of_file, :role,
+      params.require(:upload).permit(:input_file, :type_of_file, :role,
        :track_category, :track)
     end
 end
