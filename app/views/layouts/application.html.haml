@@ -2,7 +2,10 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Snowflake
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %title
+      = content_for?(:title) ? yield(:title) : "Snowflake"
+    %meta{:content => "#{content_for?(:description) ? yield(:description) : "Admin Panel"}", :name => "description"}/
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
@@ -13,4 +16,9 @@
         - flash.each do |f|
           - type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info')
           toastr['#{type}']('#{f[1]}');
-    = yield
+    #wrapper
+      = render 'layouts/navbar'
+    #page-wrapper
+      %div
+        .panel-body
+          = yield

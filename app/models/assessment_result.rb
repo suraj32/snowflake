@@ -1,5 +1,8 @@
 class AssessmentResult
+
   include Mongoid::Document
+  include Mongoid::Timestamps
+  
   field :total_points, type: Integer
   field :current_level, type: Float
 

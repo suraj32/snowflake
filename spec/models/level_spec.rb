@@ -7,6 +7,5 @@ RSpec.describe Level do
   it { should belong_to(:track) }
 
   it { should validate_presence_of(:seq_no) }
-  it { should validate_uniqueness_of(:seq_no) }
   
 end

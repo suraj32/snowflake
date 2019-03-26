@@ -10,9 +10,12 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
+//= require jquery3
+//= require popper
+//= require bootstrap
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap_sb_admin_base_v2
 //= require toastr
 //= require_tree .
 
@@ -479,3 +482,8 @@
         window.toastr = factory(window.jQuery);
     }
 }));
+
+$('#table').DataTable({
+    "pagingType": "simple"
+  });
+  $('.dataTables_length').addClass('bs-select');

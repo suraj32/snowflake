@@ -1,0 +1,15 @@
+.row.mb-3.mt-5
+  %h3 Listing Roles
+  
+%table.display.table.table-bordered.table-hover
+  %thead
+    %tr
+      %th Name
+      %th Actions
+  %tbody
+    - @roles.each do |role|
+      %tr
+        %td= role.name
+        %td
+          = link_to 'Edit', edit_role_path(role), class: 'btn btn-info btn-sm'
+          = link_to 'Destroy', role_path(role), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm'

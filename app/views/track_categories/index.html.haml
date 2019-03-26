@@ -1,0 +1,17 @@
+.row.mb-3.mt-5
+  %h3 Listing Track Categories
+  
+%table.display.table.table-bordered.table-hover
+  %thead
+    %tr
+      %th Track category
+      %th Role
+      %th Actions
+  %tbody
+    - @track_categories.each do |track_category|
+      %tr
+        %td= track_category.name
+        %td= track_category.role.name
+        %td
+          = link_to 'Edit', edit_track_category_path(track_category), class: 'btn btn-info btn-sm'
+          = link_to 'Destroy', track_category_path(track_category), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm'

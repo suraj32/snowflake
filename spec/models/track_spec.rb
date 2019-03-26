@@ -8,6 +8,5 @@ RSpec.describe Track do
   it { should belong_to(:track_category) }
 
   it { should validate_presence_of(:name) }
-  it { should validate_uniqueness_of(:name) }
   
 end

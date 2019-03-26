@@ -8,7 +8,7 @@ load_data = (type_of_file) ->
   if type_of_file == 'Tracks' or type_of_file == 'Levels'
     update_track_categories()
   if type_of_file == 'Levels'
-    update_levels()
+    update_tracks()
   return
 
 update_roles = ->
@@ -37,7 +37,7 @@ update_track_categories = ->
     return
   return
 
-update_levels = ->
+update_tracks = ->
   $('#upload_track_category').change ->
     track_category_id = $('#upload_track_category').val()
     $.ajax
@@ -77,4 +77,6 @@ $(document).on 'turbolinks:load', ->
     load_data type_of_file
     show_data type_of_file
     return
+  $('.table').DataTable 'pagingType': 'simple'
+  $('.dataTables_length').addClass 'bs-select'
   return

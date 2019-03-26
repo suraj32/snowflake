@@ -3,6 +3,6 @@ Rails.application.routes.draw do
   get '/get_roles', to: 'uploads#get_roles'
   get '/get_track_categories', to: 'uploads#get_track_categories'
   get '/get_tracks', to: 'uploads#get_tracks'
-  resources :uploads
-  root 'uploads#index'
+  resources :uploads, :roles, :track_categories, :tracks, :levels
+  root 'users#index'
 end

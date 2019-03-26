@@ -1,5 +1,8 @@
 class Level
+
   include Mongoid::Document
+  include Mongoid::Timestamps
+  
   field :seq_no, type: Integer
   field :description, type: String
   field :example_behaviour, type: Array
@@ -7,5 +10,5 @@ class Level
 
   belongs_to :track
 
-  validates :seq_no, presence: true, uniqueness: true
+  validates :seq_no, presence: true
 end

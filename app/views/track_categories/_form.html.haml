@@ -1,0 +1,5 @@
+= simple_form_for @track_category do |f|
+  = f.input :name
+  = f.input :description
+  = f.button :submit, 'Save', class: 'btn btn-sm btn-success'
+  = link_to 'Back', track_categories_path, class: 'btn btn-sm btn-default'

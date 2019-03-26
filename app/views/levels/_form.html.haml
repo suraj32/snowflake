@@ -1,0 +1,7 @@
+= simple_form_for @level do |f|
+  = f.input :seq_no
+  = f.input :description
+  = f.input :example_behaviour, as: :array
+  = f.input :example_task, as: :array
+  = f.button :submit, 'Save', class: 'btn btn-sm btn-success'
+  = link_to 'Back', levels_path, class: 'btn btn-sm btn-default'

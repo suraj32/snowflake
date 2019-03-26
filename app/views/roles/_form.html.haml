@@ -1,0 +1,4 @@
+= simple_form_for @role do |f|
+  = f.input :name
+  = f.button :submit, 'Save', class: 'btn btn-sm btn-success'
+  = link_to 'Back', roles_path, class: 'btn btn-sm btn-default'

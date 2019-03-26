@@ -1,0 +1,50 @@
+%nav.navbar.navbar-default.navbar-static-top{:role => "navigation", :style => "margin-bottom: 0"}
+  .navbar-header
+    %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+      %span.sr-only Toggle navigation
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
+    %a.navbar-brand{:href => "/"} Admin Panel
+  %ul.nav.navbar-top-links.navbar-right.pull-right
+    %li.dropdown
+      %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"}
+        %i.fa.fa-user.fa-fw
+        %i.fa.fa-caret-down
+      %ul.dropdown-menu.dropdown-user
+        %li
+          = link_to '<i class="fa fa-user fa-fw"></i>Profile</a>'.html_safe
+        %li.divider
+        %li
+          = link_to '<i class="fa fa-sign-out fa-fw"></i>Logout</a>'.html_safe, :method=>'delete'
+  .navbar-default.sidebar{:role => "navigation"}
+    .sidebar-nav.navbar-collapse
+      %ul#side-menu.nav.in
+        %li
+          %a{:href => "/"}
+            %i.fa.fa-dashboard.fa-fw
+            Dashboard
+        %li
+          %a{:href => "roles"}
+            %i.fa.fa-database.fa-fw
+            Roles
+        %li
+          %a{:href => "track_categories"}
+            %i.fa.fa-database.fa-fw
+            Track categories
+        %li
+          %a{:href => "tracks"}
+            %i.fa.fa-database.fa-fw
+            Tracks
+        %li
+          %a{:href => "levels"}
+            %i.fa.fa-database.fa-fw
+            Levels
+        %li
+          %a{:href => "uploads"}
+            %i.fa.fa-database.fa-fw
+            Files
+        %li
+          %a{:href => "uploads/new"}
+            %i.fa.fa-file.fa-fw
+            Import a file

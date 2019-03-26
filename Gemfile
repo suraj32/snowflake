@@ -33,11 +33,13 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'mongoid'
 gem 'haml'
 gem 'simple_form'
-gem 'bootstrap', '~> 4.2.1'
+gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'
+gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'sidekiq'
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'toastr-rails'
+gem 'bootstrap_sb_admin_base_v2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
