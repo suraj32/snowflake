@@ -77,6 +77,5 @@ $(document).on 'turbolinks:load', ->
     load_data type_of_file
     show_data type_of_file
     return
-  $('.table').DataTable 'pagingType': 'simple'
-  $('.dataTables_length').addClass 'bs-select'
   return
+

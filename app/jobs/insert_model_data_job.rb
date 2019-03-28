@@ -32,7 +32,7 @@ class InsertModelDataJob < ApplicationJob
         if role.errors.any?
           new_csv << [ 
             row["Role name"], 
-            "Name #{role.errors.messages[:name].join}" 
+            "Name #{role.errors.full_messages}" 
           ]
         else
           new_csv << [row["Role name"], "Inserted"]
@@ -53,7 +53,7 @@ class InsertModelDataJob < ApplicationJob
           new_csv << [
             row["Track category name"], 
             row["Description"],
-           "Name #{track_category.errors.messages[:name].join}"
+           "Name #{track_category.errors.full_messages}"
          ]
         else
           new_csv << [
@@ -78,7 +78,7 @@ class InsertModelDataJob < ApplicationJob
           new_csv << [
             row["Track name"], 
             row["Description"],
-           "Name #{track.errors.messages[:name].join}"
+           "Name #{track.errors.full_messages}"
          ]
         else
           new_csv << [row["Track name"], row["Description"], "Inserted"]
@@ -108,7 +108,7 @@ class InsertModelDataJob < ApplicationJob
             row["Description"],
             row["Example behaviour"],
             row["Example task"],
-            "Seq. no #{level.errors.messages[:seq_no].join}"
+            "Seq. no #{level.errors.full_messages}"
           ]
         else
           new_csv << [

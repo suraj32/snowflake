@@ -25,26 +25,14 @@
             %i.fa.fa-dashboard.fa-fw
             Dashboard
         %li
-          %a{:href => "roles"}
-            %i.fa.fa-database.fa-fw
-            Roles
+          = link_to '<i class="fa fa-database fa-fw"></i> Roles</a>'.html_safe, roles_path
         %li
-          %a{:href => "track_categories"}
-            %i.fa.fa-database.fa-fw
-            Track categories
+          = link_to '<i class="fa fa-database fa-fw"></i> Track categories</a>'.html_safe, track_categories_path
         %li
-          %a{:href => "tracks"}
-            %i.fa.fa-database.fa-fw
-            Tracks
+          = link_to '<i class="fa fa-database fa-fw"></i> Tracks</a>'.html_safe, tracks_path
         %li
-          %a{:href => "levels"}
-            %i.fa.fa-database.fa-fw
-            Levels
+          = link_to '<i class="fa fa-database fa-fw"></i> Levels</a>'.html_safe, levels_path
         %li
-          %a{:href => "uploads"}
-            %i.fa.fa-database.fa-fw
-            Files
+          = link_to '<i class="fa fa-database fa-fw"></i> Files</a>'.html_safe, uploads_path
         %li
-          %a{:href => "uploads/new"}
-            %i.fa.fa-file.fa-fw
-            Import a file
+          = link_to '<i class="fa fa-file fa-fw"></i> Import a file</a>'.html_safe, new_upload_path

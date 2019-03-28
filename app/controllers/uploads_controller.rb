@@ -18,6 +18,7 @@ class UploadsController < ApplicationController
       flash[:success] = "File uploaded successfully"
       redirect_to root_path
     else
+      flash[:error] = @upload.errors.full_messages
       render 'new'
     end
   end

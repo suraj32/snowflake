@@ -482,8 +482,3 @@
         window.toastr = factory(window.jQuery);
     }
 }));
-
-$('#table').DataTable({
-    "pagingType": "simple"
-  });
-  $('.dataTables_length').addClass('bs-select');
