@@ -1,0 +1,17 @@
+{
+  "resources": [
+    {
+      "name": "Users",
+      "explanation": "Orders resource",
+      "examples": [
+        {
+          "description": "Getting static data",
+          "link": "users/getting_static_data.json",
+          "groups": "all",
+          "route": "/snowflake/v1/get_static_data",
+          "method": "get"
+        }
+      ]
+    }
+  ]
+}

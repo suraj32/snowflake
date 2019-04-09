@@ -2,10 +2,10 @@ class Upload
   
   include Mongoid::Document
   include Mongoid::Timestamps
-  
+
+  field :type_of_file, type: String
   mount_uploader :input_file, ModelDataUploader
   mount_uploader :csv_report, ReportUploader
-  field :type_of_file, type: String
 
   belongs_to :role, optional: true
   belongs_to :track_category, optional: true

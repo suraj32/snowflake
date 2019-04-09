@@ -40,15 +40,23 @@ gem 'sidekiq'
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'toastr-rails'
 gem 'bootstrap_sb_admin_base_v2'
+gem 'active_model_serializers'
 
 group :development, :test do
+  gem 'activesupport'
+  #gem 'railroady'
+  gem 'railroady', :git => "https://github.com/preston/railroady.git"
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'database_cleaner'
+  gem 'mongoid-rspec'
+  gem 'shoulda-matchers'
+  gem 'faker'
+  gem 'rspec_api_documentation'
+  gem 'apitome'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  # gem 'rspec-rails'
-  # gem 'rspec-rails', github: 'rspec/rspec-rails', ref: '0d0ce9e'
-  gem 'factory_bot_rails'
-  gem 'faker'
-  gem 'mongoid-rspec'
+  #gem 'rspec-rails', github: 'rspec/rspec-rails', ref: '0d0ce9e'
 end
 
 group :development do
@@ -66,7 +74,6 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
-  gem 'shoulda-matchers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

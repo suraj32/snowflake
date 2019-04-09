@@ -1,0 +1,7 @@
+= simple_form_for @cycle do |f|
+  = f.input :emp_duration_start, as: :date, html5: true
+  = f.input :emp_duration_end, as: :date, html5: true
+  = f.input :manager_duration_start, as: :date, html5: true
+  = f.input :manager_duration_end, as: :date, html5: true
+  = f.button :submit, 'Save', class: 'btn btn-sm btn-success'
+  = link_to 'Back', cycles_path, class: 'btn btn-sm btn-default'

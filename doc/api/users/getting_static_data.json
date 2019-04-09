@@ -1,0 +1,49 @@
+{
+  "resource": "Users",
+  "resource_explanation": "Orders resource",
+  "http_method": "GET",
+  "route": "/snowflake/v1/get_static_data",
+  "description": "Getting static data",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/snowflake/v1/get_static_data?user_id=5cab30168481723256d4ca4e",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "user_id": "5cab30168481723256d4ca4e"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\n  \"tracks\": [\n    [\n      {\n        \"ORGANISATION\": {\n          \"displayName\": \"Organisation\",\n          \"category\": \"Legal\",\n          \"description\": \"In quis sint. Et molestias aspernatur. Aut laborum distinctio.\",\n          \"milestones\": [\n            {\n              \"description\": \"Aliquam dicta earum. Eum et consectetur. Harum in quis.\",\n              \"example_behaviour\": [\n                \"Expedita voluptas molestiae.\",\n                \"Hic quis architecto.\",\n                \"Quaerat ipsum eos.\"\n              ],\n              \"example_task\": [\n                \"Rerum eaque voluptas.\",\n                \"Molestiae illum dicta.\",\n                \"Tempora eum consequatur.\"\n              ]\n            }\n          ]\n        }\n      }\n    ],\n    [\n      {\n        \"PROACTIVE\": {\n          \"displayName\": \"Proactive\",\n          \"category\": \"Healthcare\",\n          \"description\": \"Totam eaque nulla. At qui suscipit. Qui harum id.\",\n          \"milestones\": [\n            {\n              \"description\": \"Quia sed magnam. Quia ea voluptatem. Fuga architecto esse.\",\n              \"example_behaviour\": [\n                \"Animi voluptas nam.\",\n                \"Qui laboriosam voluptatum.\",\n                \"Dolor qui dignissimos.\"\n              ],\n              \"example_task\": [\n                \"In enim sunt.\",\n                \"Consectetur voluptate totam.\",\n                \"Recusandae et suscipit.\"\n              ]\n            }\n          ]\n        }\n      }\n    ],\n    [\n      {\n        \"PROBLEM SOLVING\": {\n          \"displayName\": \"Problem solving\",\n          \"category\": \"Consulting\",\n          \"description\": \"Vel earum nihil. Qui iste saepe. Molestiae voluptate perferendis.\",\n          \"milestones\": [\n            {\n              \"description\": \"Dolor rerum ut. Distinctio et delectus. Facere voluptatum quis.\",\n              \"example_behaviour\": [\n                \"In maxime dolore.\",\n                \"Aut quod qui.\",\n                \"Dolores voluptatibus temporibus.\"\n              ],\n              \"example_task\": [\n                \"Qui minus blanditiis.\",\n                \"Molestiae harum corrupti.\",\n                \"Doloremque laudantium et.\"\n              ]\n            }\n          ]\n        }\n      }\n    ]\n  ]\n}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"e24044b5406eda379201670d78db58f4\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "7448b7cb-b4ca-4dbc-a6a1-77ab07a61011",
+        "X-Runtime": "0.048719",
+        "Content-Length": "1302"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+    }
+  ]
+}

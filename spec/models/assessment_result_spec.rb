@@ -10,5 +10,6 @@ RSpec.describe AssessmentResult do
   
   it { should validate_presence_of(:total_points) }
   it { should validate_presence_of(:current_level) }
+  it { should validate_presence_of(:points_to_next_level) }
 
 end

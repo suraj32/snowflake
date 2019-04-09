@@ -8,5 +8,6 @@ RSpec.describe TrackCategory do
   it { should belong_to(:role) }
 
   it { should validate_presence_of(:name) }
+  it { should validate_uniqueness_of(:name).scoped_to(:role) }
     
 end

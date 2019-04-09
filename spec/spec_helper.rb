@@ -13,8 +13,15 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+ENV["RAILS_ENV"] ||= 'test'
+require File.expand_path("../../config/environment", __FILE__)
+require 'mongoid'
+require 'rspec/rails'
 require 'factory_bot_rails'
+require 'rails/mongoid'
+require 'database_cleaner'
 require 'mongoid-rspec'
+require 'rails_helper'
 
 RSpec.configure do |config|
   config.include Mongoid::Matchers
@@ -100,3 +107,7 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+  RspecApiDocumentation.configure do |config|
+    config.format = :json
+  end
+

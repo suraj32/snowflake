@@ -10,4 +10,5 @@ class TrackCategory
   belongs_to :role
 
   validates :name, presence: true
+  validates :name, uniqueness: { scope: :role }
 end
