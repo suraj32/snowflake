@@ -14,7 +14,7 @@ load_data = (type_of_file) ->
 update_roles = ->
   if $('#upload_role').text() == '\n'
     $.ajax
-      url: '/get_roles'
+      url: '/snowflake/get_roles'
       success: (data, textStatus, jqXHR) ->
         for i of data
           `i = i`
@@ -26,7 +26,7 @@ update_track_categories = ->
   $('#upload_role').change ->
     role_id = $('#upload_role').val()
     $.ajax
-      url: '/get_track_categories'
+      url: '/snowflake/get_track_categories'
       data: id: role_id
       success: (data, textStatus, jqXHR) ->
         $('#upload_track_category').empty()
@@ -41,7 +41,7 @@ update_tracks = ->
   $('#upload_track_category').change ->
     track_category_id = $('#upload_track_category').val()
     $.ajax
-      url: '/get_tracks'
+      url: '/snowflake/get_tracks'
       data: id: track_category_id
       success: (data, textStatus, jqXHR) ->
         $('#upload_track').empty()
