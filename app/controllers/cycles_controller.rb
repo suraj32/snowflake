@@ -1,4 +1,5 @@
 class CyclesController < ApplicationController
+  #It is assumed that only one cycle will be open at a time
   def index
     @cycles = Cycle.all
   end
@@ -44,7 +45,8 @@ class CyclesController < ApplicationController
         :emp_duration_start,
         :emp_duration_end,
         :manager_duration_start,
-        :manager_duration_end
+        :manager_duration_end,
+        :is_open
       )
     end
 end
