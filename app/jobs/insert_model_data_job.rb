@@ -26,16 +26,18 @@ class InsertModelDataJob < ApplicationJob
 
   def insert_roles(upload, input_csv, tmp_report_path)
     csv_report = CSV.open(tmp_report_path, 'w') do |new_csv|
-      new_csv << ['Role name', 'Status']
+      new_csv << ['Role name', 'Can assess', 'Status']
       input_csv.each do |row|
-        role = Role.create(name: row["Role name"])
+        role = Role.create(name: row["Role name"],
+                           can_assess: row["Can assess"])
         if role.errors.any?
           new_csv << [ 
-            row["Role name"], 
-            role.errors.full_messages 
+            row["Role name"],
+            row["Can assess"],
+            role.errors.full_messages
           ]
         else
-          new_csv << [row["Role name"], "Inserted"]
+          new_csv << [row["Role name"], row["Can assess"], "Inserted"]
         end
       end
     end
@@ -47,8 +49,9 @@ class InsertModelDataJob < ApplicationJob
     csv_report = CSV.open(tmp_report_path, 'w') do |new_csv|
       new_csv << ['Track category name', 'Description', 'Status']
       input_csv.each do |row|
-        track_category = role.track_categories.create(name: row["Track category name"], 
-          description: row["Description"])
+        track_category = role.track_categories.create(
+                                         name: row["Track category name"],
+                                         description: row["Description"])
         if track_category.errors.any?
           new_csv << [
             row["Track category name"], 

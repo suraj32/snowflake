@@ -1,7 +1,6 @@
 class RolesController < ApplicationController
 	def index
 		@roles = Role.all
-		#render json: {roles: @roles}
 	end
 
 	def show
@@ -30,6 +29,6 @@ class RolesController < ApplicationController
 
 	private
 		def role_params
-			params.require(:role).permit(:name)
+			params.require(:role).permit(:name, can_assess: [])
 		end
 end

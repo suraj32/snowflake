@@ -4,6 +4,7 @@ class Role
   include Mongoid::Timestamps
   
   field :name, type: String
+  field :can_assess, type: String
 
   has_many :users
   has_many :track_categories
