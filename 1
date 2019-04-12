@@ -1,947 +1,213 @@
-diff --git a/.rspec b/.rspec
-index c99d2e7..a35c44f 100644
---- a/.rspec
-+++ b/.rspec
-@@ -1 +1 @@
----require spec_helper
-+--require rails_helper
-diff --git a/Gemfile b/Gemfile
-index 7605897..7b2f8cc 100644
---- a/Gemfile
-+++ b/Gemfile
-@@ -40,15 +40,22 @@ gem 'sidekiq'
- gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
- gem 'toastr-rails'
- gem 'bootstrap_sb_admin_base_v2'
-+gem 'active_model_serializers'
+diff --git a/app/controllers/api/v1/users_controller.rb b/app/controllers/api/v1/users_controller.rb
+index 5bdb808..32817c6 100644
+--- a/app/controllers/api/v1/users_controller.rb
++++ b/app/controllers/api/v1/users_controller.rb
+@@ -12,31 +12,47 @@ module Api::V1
+     # end
  
- group :development, :test do
--  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
--  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
--  # gem 'rspec-rails'
--  # gem 'rspec-rails', github: 'rspec/rspec-rails', ref: '0d0ce9e'
-+  gem 'activesupport'
-+  gem 'railroady'
-+  gem 'rspec-rails'
-   gem 'factory_bot_rails'
--  gem 'faker'
-+  gem 'database_cleaner'
-   gem 'mongoid-rspec'
-+  gem 'shoulda-matchers'
-+  gem 'faker'
-+  gem 'rspec_api_documentation'
-+  gem 'apitome'
-+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-+  #gem 'rspec-rails', github: 'rspec/rspec-rails', ref: '0d0ce9e'
- end
+     def get_static_data
+-      user = User.find(params[:user_id])
+-      @role = Role.find_by(name: user.role)
+-      render json: RoleSerializer.serialize_with_tracks(@role)
++      if params[:user_id]
++        user = User.find(params[:user_id])
++        @role = Role.find_by(name: user.role)
++        render json: @role
++      else
++        @roles = Role.all
++        render json: @roles
++      end
+     end
  
- group :development do
-@@ -66,7 +73,6 @@ group :test do
-   gem 'selenium-webdriver'
-   # Easy installation and use of chromedriver to run system tests with Chrome
-   gem 'chromedriver-helper'
--  gem 'shoulda-matchers'
- end
- 
- # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-diff --git a/Gemfile.lock b/Gemfile.lock
-index 3a7290d..4134334 100644
---- a/Gemfile.lock
-+++ b/Gemfile.lock
-@@ -24,6 +24,11 @@ GEM
-       erubi (~> 1.4)
-       rails-dom-testing (~> 2.0)
-       rails-html-sanitizer (~> 1.0, >= 1.0.3)
-+    active_model_serializers (0.10.9)
-+      actionpack (>= 4.1, < 6)
-+      activemodel (>= 4.1, < 6)
-+      case_transform (>= 0.2)
-+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
-     activejob (5.2.2)
-       activesupport (= 5.2.2)
-       globalid (>= 0.3.6)
-@@ -44,6 +49,9 @@ GEM
-       tzinfo (~> 1.1)
-     addressable (2.6.0)
-       public_suffix (>= 2.0.2, < 4.0)
-+    apitome (0.2.1)
-+      kramdown
-+      railties
-     archive-zip (0.12.0)
-       io-like (~> 0.3.0)
-     arel (9.0.0)
-@@ -78,6 +86,8 @@ GEM
-       carrierwave (>= 0.8, < 1.4)
-       mongoid (>= 3.0, < 8.0)
-       mongoid-grid_fs (>= 1.3, < 3.0)
-+    case_transform (0.2)
-+      activesupport
-     childprocess (0.9.0)
-       ffi (~> 1.0, >= 1.0.11)
-     chromedriver-helper (2.1.0)
-@@ -93,6 +103,7 @@ GEM
-     concurrent-ruby (1.1.4)
-     connection_pool (2.2.2)
-     crass (1.0.4)
-+    database_cleaner (1.7.0)
-     diff-lcs (1.3)
-     erubi (1.8.0)
-     execjs (2.7.0)
-@@ -121,6 +132,8 @@ GEM
-       rails-dom-testing (>= 1, < 3)
-       railties (>= 4.2.0)
-       thor (>= 0.14, < 2.0)
-+    jsonapi-renderer (0.2.0)
-+    kramdown (2.1.0)
-     listen (3.1.5)
-       rb-fsevent (~> 0.9, >= 0.9.4)
-       rb-inotify (~> 0.9, >= 0.9.7)
-@@ -158,6 +171,7 @@ GEM
-       rspec (~> 3.3)
-     msgpack (1.2.7)
-     multi_json (1.13.1)
-+    mustache (1.1.0)
-     nio4r (2.3.1)
-     nokogiri (1.10.1)
-       mini_portile2 (~> 2.4.0)
-@@ -169,6 +183,7 @@ GEM
-       rack
-     rack-test (1.1.0)
-       rack (>= 1.0, < 3)
-+    railroady (1.5.3)
-     rails (5.2.2)
-       actioncable (= 5.2.2)
-       actionmailer (= 5.2.2)
-@@ -211,7 +226,19 @@ GEM
-     rspec-mocks (3.8.0)
-       diff-lcs (>= 1.2.0, < 2.0)
-       rspec-support (~> 3.8.0)
-+    rspec-rails (3.8.2)
-+      actionpack (>= 3.0)
-+      activesupport (>= 3.0)
-+      railties (>= 3.0)
-+      rspec-core (~> 3.8.0)
-+      rspec-expectations (~> 3.8.0)
-+      rspec-mocks (~> 3.8.0)
-+      rspec-support (~> 3.8.0)
-     rspec-support (3.8.0)
-+    rspec_api_documentation (6.1.0)
-+      activesupport (>= 3.0.0)
-+      mustache (~> 1.0, >= 0.99.4)
-+      rspec (~> 3.0)
-     ruby_dep (1.5.0)
-     rubyzip (1.2.2)
-     sass (3.7.3)
-@@ -287,6 +314,9 @@ PLATFORMS
-   ruby
- 
- DEPENDENCIES
-+  active_model_serializers
-+  activesupport
-+  apitome
-   bootsnap (>= 1.1.0)
-   bootstrap (~> 4.3.1)
-   bootstrap_sb_admin_base_v2
-@@ -295,6 +325,7 @@ DEPENDENCIES
-   carrierwave-mongoid
-   chromedriver-helper
-   coffee-rails (~> 4.2)
-+  database_cleaner
-   factory_bot_rails
-   faker
-   haml
-@@ -304,7 +335,10 @@ DEPENDENCIES
-   mongoid
-   mongoid-rspec
-   puma (~> 3.11)
-+  railroady
-   rails (~> 5.2.2)
-+  rspec-rails
-+  rspec_api_documentation
-   sass-rails (~> 5.0)
-   selenium-webdriver
-   shoulda-matchers
-diff --git a/app/controllers/application_controller.rb b/app/controllers/application_controller.rb
-index 09705d1..7f4d8cd 100644
---- a/app/controllers/application_controller.rb
-+++ b/app/controllers/application_controller.rb
-@@ -1,2 +1,4 @@
- class ApplicationController < ActionController::Base
-+	include ActionController::Serialization
-+
- end
-diff --git a/app/controllers/users_controller.rb b/app/controllers/users_controller.rb
-index 3e74dea..30d7544 100644
---- a/app/controllers/users_controller.rb
-+++ b/app/controllers/users_controller.rb
-@@ -1,2 +1,5 @@
- class UsersController < ApplicationController
-+  def new
-+    @user = User.find(request.headers[:HTTP_AUTHORIZATION])
-+  end
- end
-diff --git a/app/jobs/insert_model_data_job.rb b/app/jobs/insert_model_data_job.rb
-index bf8cbe4..0417d64 100644
---- a/app/jobs/insert_model_data_job.rb
-+++ b/app/jobs/insert_model_data_job.rb
-@@ -32,7 +32,7 @@ class InsertModelDataJob < ApplicationJob
-         if role.errors.any?
-           new_csv << [ 
-             row["Role name"], 
--            "Name #{role.errors.full_messages}" 
-+            role.errors.full_messages 
-           ]
-         else
-           new_csv << [row["Role name"], "Inserted"]
-@@ -53,7 +53,7 @@ class InsertModelDataJob < ApplicationJob
-           new_csv << [
-             row["Track category name"], 
-             row["Description"],
--           "Name #{track_category.errors.full_messages}"
-+            track_category.errors.full_messages
-          ]
-         else
-           new_csv << [
-@@ -78,7 +78,7 @@ class InsertModelDataJob < ApplicationJob
-           new_csv << [
-             row["Track name"], 
-             row["Description"],
--           "Name #{track.errors.full_messages}"
-+            track.errors.full_messages
-          ]
-         else
-           new_csv << [row["Track name"], row["Description"], "Inserted"]
-@@ -94,7 +94,8 @@ class InsertModelDataJob < ApplicationJob
-       new_csv << ['Seq. no.', 
-         'Description', 
-         'Example behaviour',
--        'Example task', 'Status']
-+        'Example task', 'Status'
-+      ]
-       input_csv.each do |row|
-         level = track.levels.create(
-           seq_no:            row["Seq. no."],
-@@ -108,7 +109,7 @@ class InsertModelDataJob < ApplicationJob
-             row["Description"],
-             row["Example behaviour"],
-             row["Example task"],
--            "Seq. no #{level.errors.full_messages}"
-+            level.errors.full_messages
-           ]
-         else
-           new_csv << [
-diff --git a/app/models/level.rb b/app/models/level.rb
-index 48dd517..d9388d0 100644
---- a/app/models/level.rb
-+++ b/app/models/level.rb
-@@ -11,4 +11,5 @@ class Level
-   belongs_to :track
- 
-   validates :seq_no, presence: true
-+  validates :seq_no, uniqueness: { scope: [:role, :track_category, :track] }
+     def create_assessment
+-      user = User.find(params[:user_id])
+-      role = Role.find_by(name: user.role)
+-      assessment_result = user.assessment_results.create!(
+-                              total_points: params["Total points"],
+-                              current_level: params["Current level"],
+-                              points_to_next_level:
+-                               params["Points to next level"])
+-      assessment_data = params["Assessment Data"]
+-      for a in assessment_data
+-        track_category = TrackCategory.find_by(name: a["Track category"])
+-        track = track_category.tracks.find_by(name: a["Track"])
+-        level = track.levels.find_by(seq_no: a["Level"])
+-        assessment_result.level_assessments.create!(user_id: user.id,
+-                                                   role_id: role.id,
+-                                                   track_category_id: track_category,
+-                                                   track_id: track.id,
+-                                                   level_id: level.id,
+-                                                   )
++      cycle = Cycle.find_by(is_open: true)
++      if cycle && (Date.today <= cycle.emp_duration_end)
++        byebug
++        assessment_result = AssessmentResult.create(
++                          total_points:         params[:total_points],
++                          current_level:        params[:current_level],
++                          points_to_next_level: params[:points_to_next_level],
++                          cycle_id:             cycle.id,
++                          user_id:              params[:user_id])
++        track_categories = params[:track_categories]
++        for track_category in track_categories
++          tracks = track_categories[:tracks]
++          for track in tracks
++            assessment_result.level_assessments.create(
++                        user_id:           params[:user_id],
++                        role_id:           params[:role_id],
++                        track_category_id: track_category[:track_category_id],
++                        track_id:          track[:track_id],
++                        level_id:          track[:level_id])
++          end
++        end
++        render json: {message: 'Assessment saved successfully'}, status: 201
++      else
++        render json: {errors: 'Sorry, u can only create assessment in allowed time'},
++                      status: 412
+       end
+     end
++    
++    def update_assessment
++      cycle = Cycle.find_by(is_open: true)
++    end
+   end
  end
 \ No newline at end of file
-diff --git a/app/models/track.rb b/app/models/track.rb
-index 6549da1..982f33a 100644
---- a/app/models/track.rb
-+++ b/app/models/track.rb
-@@ -10,4 +10,5 @@ class Track
-   belongs_to :track_category
- 
-   validates :name, presence: true
-+  validates :name, uniqueness: { scope: [:role, :track_category] }
+diff --git a/app/controllers/assessment_results_controller.rb b/app/controllers/assessment_results_controller.rb
+index f4635af..883054d 100644
+--- a/app/controllers/assessment_results_controller.rb
++++ b/app/controllers/assessment_results_controller.rb
+@@ -1,4 +1,5 @@
+ class AssessmentResultsController < ApplicationController
+   def index
++    @assessment_results = AssessmentResult.all
+   end
  end
-\ No newline at end of file
-diff --git a/app/models/track_category.rb b/app/models/track_category.rb
-index 51b5aa9..245a165 100644
---- a/app/models/track_category.rb
-+++ b/app/models/track_category.rb
-@@ -10,4 +10,5 @@ class TrackCategory
-   belongs_to :role
- 
-   validates :name, presence: true
-+  validates :name, uniqueness: { scope: :role }
- end
-\ No newline at end of file
-diff --git a/app/models/upload.rb b/app/models/upload.rb
-index 3bb30dd..2cc4cda 100644
---- a/app/models/upload.rb
-+++ b/app/models/upload.rb
-@@ -2,10 +2,10 @@ class Upload
-   
-   include Mongoid::Document
-   include Mongoid::Timestamps
--  
-+
-+  field :type_of_file, type: String
-   mount_uploader :input_file, ModelDataUploader
-   mount_uploader :csv_report, ReportUploader
--  field :type_of_file, type: String
- 
-   belongs_to :role, optional: true
-   belongs_to :track_category, optional: true
-diff --git a/app/models/user.rb b/app/models/user.rb
-index 11efedf..6a3c9c6 100644
---- a/app/models/user.rb
-+++ b/app/models/user.rb
-@@ -2,17 +2,10 @@ class User
-   include Mongoid::Document
-   include Mongoid::Timestamps
-   
--  field :name, type: String
-   field :email, type: String
-   field :password, type: String
--  field :mobile_no, type: Integer
-+  field :role, type: String, default: 'Employee'
- 
-   has_many :assessment_results
--  belongs_to :role
- 
--  validates :name, presence: true, length: { minimum: 6 }
--  validates :email, presence: true, uniqueness: true,
--   format: {with: /\A.+@#{"joshsoftware.com"}/,
--   message: "Only #{"joshsoftware.com"} email-id is allowed."}
--  validates :mobile_no, length: { is: 10 }, allow_nil: true
- end
-\ No newline at end of file
-diff --git a/app/views/layouts/_navbar.html.haml b/app/views/layouts/_navbar.html.haml
-index f079f88..fa22cda 100644
---- a/app/views/layouts/_navbar.html.haml
-+++ b/app/views/layouts/_navbar.html.haml
-@@ -16,7 +16,7 @@
-           = link_to '<i class="fa fa-user fa-fw"></i>Profile</a>'.html_safe
-         %li.divider
-         %li
--          = link_to '<i class="fa fa-sign-out fa-fw"></i>Logout</a>'.html_safe, :method=>'delete'
-+          = link_to '<i class="fa fa-sign-out fa-fw"></i>Logout</a>'.html_safe, users_sign_out_path, method: :delete
-   .navbar-default.sidebar{:role => "navigation"}
-     .sidebar-nav.navbar-collapse
-       %ul#side-menu.nav.in
-diff --git a/app/views/users/index.html.haml b/app/views/users/index.html.haml
+diff --git a/app/serializers/level_serializer.rb b/app/serializers/level_serializer.rb
 deleted file mode 100644
-index 7c6079a..0000000
---- a/app/views/users/index.html.haml
+index ed45fd4..0000000
+--- a/app/serializers/level_serializer.rb
 +++ /dev/null
-@@ -1 +0,0 @@
--%h2 Welcome
+@@ -1,16 +0,0 @@
+-class LevelSerializer < ActiveModel::Serializer
+-
+-  attributes :description, :example_behaviour, :example_task
+-
+-  def self.serialize_levels(levels)
+-    levels.map{|level| self.serialize_level(level) }    
+-  end
+-
+-  def self.serialize_level(level)
+-  {
+-    summary: level.description,
+-    signals: level.example_behaviour,
+-    examples: level.example_task
+-  }
+-  end
+-end
 \ No newline at end of file
-diff --git a/config/application.rb b/config/application.rb
-index d441521..7357a30 100644
---- a/config/application.rb
-+++ b/config/application.rb
-@@ -21,6 +21,7 @@ module Snowflake
-   class Application < Rails::Application
-     # Initialize configuration defaults for originally generated Rails version.
-     config.load_defaults 5.2
-+    config.action_controller.forgery_protection_origin_check = false
+diff --git a/app/serializers/role_serializer.rb b/app/serializers/role_serializer.rb
+index decf0ca..80c59b7 100644
+--- a/app/serializers/role_serializer.rb
++++ b/app/serializers/role_serializer.rb
+@@ -1,19 +1,48 @@
+ class RoleSerializer < ActiveModel::Serializer
  
-     # Settings in config/environments/* take precedence over those specified here.
-     # Application configuration can go into files in config/initializers
-diff --git a/config/mongoid.yml b/config/mongoid.yml
-index a31f8d4..fb779a7 100644
---- a/config/mongoid.yml
-+++ b/config/mongoid.yml
-@@ -5,7 +5,7 @@ development:
-     default:
-       # Defines the name of the default database that Mongoid can connect to.
-       # (required).
--      database: snowflake_development
-+      database: intranet_development
-       # Provides the hosts the default client can connect to. Must be an array
-       # of host:port pairs. (required)
-       hosts:
-diff --git a/config/routes.rb b/config/routes.rb
-index a1a1981..cb80ffa 100644
---- a/config/routes.rb
-+++ b/config/routes.rb
-@@ -1,8 +1,17 @@
- Rails.application.routes.draw do
-   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
--  get '/get_roles', to: 'uploads#get_roles'
--  get '/get_track_categories', to: 'uploads#get_track_categories'
--  get '/get_tracks', to: 'uploads#get_tracks'
--  resources :uploads, :roles, :track_categories, :tracks, :levels
--  root 'users#index'
-+  delete '/users/sign_out', to: 'devise/sessions#destroy', via: :all
-+  scope path: 'snowflake' do
-+    get '/get_roles', to: 'uploads#get_roles'
-+    get '/get_track_categories', to: 'uploads#get_track_categories'
-+    get '/get_tracks', to: 'uploads#get_tracks'
-+    resources :uploads, :roles, :track_categories, :tracks, :levels
-+    scope module: 'api' do
-+      namespace :v1 do
-+        resources :users
-+        get '/get_static_data', to: 'users#get_static_data'
++  attributes :id, :name
++
+   has_many :track_categories
+ 
+-  def self.serialize_with_tracks(role)
+-  {
+-    tracks: self.serialize_track_categories(role.track_categories)
+-  }
+-  end
++  # def self.serialize_with_tracks(role)
++  # {
++  #   tracks: self.serialize_track_categories(role.track_categories)
++  # }
++  # end
+ 
+-  def self.serialize_track_categories(track_categories)
+-    track_categories.map{ |track_category|
+-     self.serialize_tracks(track_category) }
+-  end
++  # def self.serialize_track_categories(track_categories)
++  #   track_categories.map{ |track_category|
++  #    self.serialize_tracks(track_category)
++  #   }
++  # end
++
++  # def self.serialize_tracks(track_category)
++  #   TrackSerializer.serialize_tracks(track_category.tracks)
++  # end
++
++  # def self.serialize_with_roles(roles)
++  # {
++  #   Roles: ActiveModelSerializers::SerializableResource.new(roles).as_json
++  # }
++  # end
++
++  class TrackCategorySerializer < ActiveModel::Serializer
++
++    attributes :id, :name, :description
++
++    has_many :tracks
++
++    class TrackSerializer < ActiveModel::Serializer
++
++      attributes :id, :name, :description
++
++      has_many :levels
++
++      class LevelSerializer < ActiveModel::Serializer
++
++        attributes :id, :seq_no, :description, :example_behaviour, :example_task
+ 
+-  def self.serialize_tracks(track_category)
+-    TrackSerializer.serialize_tracks(track_category.tracks)
 +      end
 +    end
-+    root 'users#new'
-+  end
+   end
  end
 \ No newline at end of file
-diff --git a/public/uploads/tmp/49dfd72de3d015476a0a_report.csv b/public/uploads/tmp/49dfd72de3d015476a0a_report.csv
+diff --git a/app/serializers/track_category_serializer.rb b/app/serializers/track_category_serializer.rb
 deleted file mode 100644
-index 890a92c..0000000
---- a/public/uploads/tmp/49dfd72de3d015476a0a_report.csv
-+++ /dev/null
-@@ -1 +0,0 @@
--Role name,Status
-diff --git a/public/uploads/tmp/csvtest_report.csv b/public/uploads/tmp/csvtest_report.csv
-deleted file mode 100644
-index 1c5c6cb..0000000
---- a/public/uploads/tmp/csvtest_report.csv
+index 72bbc97..0000000
+--- a/app/serializers/track_category_serializer.rb
 +++ /dev/null
 @@ -1,5 +0,0 @@
--Role name,Status
--,Name can't be blank
--,Name can't be blank
--,Name can't be blank
--,Name can't be blank
-diff --git a/public/uploads/upload/csv_report/5c922de78481726d8c10e184/roletest_report.csv b/public/uploads/upload/csv_report/5c922de78481726d8c10e184/roletest_report.csv
-deleted file mode 100644
-index d9b67e6..0000000
---- a/public/uploads/upload/csv_report/5c922de78481726d8c10e184/roletest_report.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name,Status
--System Engineer,Name 
--Associate Engineer,Name 
--,Inserted
--Software Architecture,Name 
--System Engineer,Inserted
-diff --git a/public/uploads/upload/csv_report/5c922e658481726d8c10e188/roletest_report.csv b/public/uploads/upload/csv_report/5c922e658481726d8c10e188/roletest_report.csv
-deleted file mode 100644
-index 367c897..0000000
---- a/public/uploads/upload/csv_report/5c922e658481726d8c10e188/roletest_report.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name,Status
--System Engineer,Inserted
--Associate Engineer,Inserted
--,Inserted
--Software Architecture,Inserted
--System Engineer,Inserted
-diff --git a/public/uploads/upload/csv_report/5c922e858481726d8c10e189/roletest_report.csv b/public/uploads/upload/csv_report/5c922e858481726d8c10e189/roletest_report.csv
-deleted file mode 100644
-index 367c897..0000000
---- a/public/uploads/upload/csv_report/5c922e858481726d8c10e189/roletest_report.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name,Status
--System Engineer,Inserted
--Associate Engineer,Inserted
--,Inserted
--Software Architecture,Inserted
--System Engineer,Inserted
-diff --git a/public/uploads/upload/csv_report/5c922fa68481726f06dc8c67/roletest_report.csv b/public/uploads/upload/csv_report/5c922fa68481726f06dc8c67/roletest_report.csv
-deleted file mode 100644
-index 367c897..0000000
---- a/public/uploads/upload/csv_report/5c922fa68481726f06dc8c67/roletest_report.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name,Status
--System Engineer,Inserted
--Associate Engineer,Inserted
--,Inserted
--Software Architecture,Inserted
--System Engineer,Inserted
-diff --git a/public/uploads/upload/csv_report/5c922fd98481726f5ec11d7d/roletest_report.csv b/public/uploads/upload/csv_report/5c922fd98481726f5ec11d7d/roletest_report.csv
-deleted file mode 100644
-index 367c897..0000000
---- a/public/uploads/upload/csv_report/5c922fd98481726f5ec11d7d/roletest_report.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name,Status
--System Engineer,Inserted
--Associate Engineer,Inserted
--,Inserted
--Software Architecture,Inserted
--System Engineer,Inserted
-diff --git a/public/uploads/upload/csv_report/5c92330d848172705feb505f/roletest_report.csv b/public/uploads/upload/csv_report/5c92330d848172705feb505f/roletest_report.csv
-deleted file mode 100644
-index 367c897..0000000
---- a/public/uploads/upload/csv_report/5c92330d848172705feb505f/roletest_report.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name,Status
--System Engineer,Inserted
--Associate Engineer,Inserted
--,Inserted
--Software Architecture,Inserted
--System Engineer,Inserted
-diff --git a/public/uploads/upload/csv_report/5c9233e5848172705feb5060/roletest_report.csv b/public/uploads/upload/csv_report/5c9233e5848172705feb5060/roletest_report.csv
-deleted file mode 100644
-index 367c897..0000000
---- a/public/uploads/upload/csv_report/5c9233e5848172705feb5060/roletest_report.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name,Status
--System Engineer,Inserted
--Associate Engineer,Inserted
--,Inserted
--Software Architecture,Inserted
--System Engineer,Inserted
-diff --git a/public/uploads/upload/csv_report/5c92345e848172719949f165/roletest_report.csv b/public/uploads/upload/csv_report/5c92345e848172719949f165/roletest_report.csv
-deleted file mode 100644
-index 367c897..0000000
---- a/public/uploads/upload/csv_report/5c92345e848172719949f165/roletest_report.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name,Status
--System Engineer,Inserted
--Associate Engineer,Inserted
--,Inserted
--Software Architecture,Inserted
--System Engineer,Inserted
-diff --git a/public/uploads/upload/csv_report/5c9234ed84817272fd1942b0/roletest_report.csv b/public/uploads/upload/csv_report/5c9234ed84817272fd1942b0/roletest_report.csv
-deleted file mode 100644
-index 367c897..0000000
---- a/public/uploads/upload/csv_report/5c9234ed84817272fd1942b0/roletest_report.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name,Status
--System Engineer,Inserted
--Associate Engineer,Inserted
--,Inserted
--Software Architecture,Inserted
--System Engineer,Inserted
-diff --git a/public/uploads/upload/csv_report/5c923e2b84817272fd1942b1/trackTest_report.csv b/public/uploads/upload/csv_report/5c923e2b84817272fd1942b1/trackTest_report.csv
-deleted file mode 100644
-index 4b487f9..0000000
---- a/public/uploads/upload/csv_report/5c923e2b84817272fd1942b1/trackTest_report.csv
-+++ /dev/null
-@@ -1,7 +0,0 @@
--Name,Status
--Mobile,Name 
--Web Client,Name 
--Foundations,Name 
--Severs,Name 
--Severs,Inserted
--,Inserted
-diff --git a/public/uploads/upload/csv_report/5c9881108481721fd8c87153/trackCategoryTest_report.csv b/public/uploads/upload/csv_report/5c9881108481721fd8c87153/trackCategoryTest_report.csv
-deleted file mode 100644
-index 5d7427c..0000000
---- a/public/uploads/upload/csv_report/5c9881108481721fd8c87153/trackCategoryTest_report.csv
-+++ /dev/null
-@@ -1,7 +0,0 @@
--Track category name,Description,Status
--,"Development of high quality production features and supporting infrastructure. Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",Inserted
--,Technical leadership that empowers groups of people to deliver high quality work.,Inserted
--,"Formal servant leadership that develops team members, advocates for them, supports their well being, and ensures an environment conducive to enabling effective work. Supporting the growth of the organization by working to improve processes.",Inserted
--,Guarding and improving Medium's culture. Representing Medium externally and drawing attention to the team’s successes. Establishing Medium as an attractive place to work. Leveling-up the team by spreading knowledge and developing colleagues’ skills.,Inserted
--,Technical leadership.,Inserted
--,"Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",Inserted
-diff --git a/public/uploads/upload/csv_report/5c98d4a08481725495fa408f/trackCategoryTest_report.csv b/public/uploads/upload/csv_report/5c98d4a08481725495fa408f/trackCategoryTest_report.csv
-deleted file mode 100644
-index 5d7427c..0000000
---- a/public/uploads/upload/csv_report/5c98d4a08481725495fa408f/trackCategoryTest_report.csv
-+++ /dev/null
-@@ -1,7 +0,0 @@
--Track category name,Description,Status
--,"Development of high quality production features and supporting infrastructure. Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",Inserted
--,Technical leadership that empowers groups of people to deliver high quality work.,Inserted
--,"Formal servant leadership that develops team members, advocates for them, supports their well being, and ensures an environment conducive to enabling effective work. Supporting the growth of the organization by working to improve processes.",Inserted
--,Guarding and improving Medium's culture. Representing Medium externally and drawing attention to the team’s successes. Establishing Medium as an attractive place to work. Leveling-up the team by spreading knowledge and developing colleagues’ skills.,Inserted
--,Technical leadership.,Inserted
--,"Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",Inserted
-diff --git a/public/uploads/upload/csv_report/5c98d6318481725495fa4096/trackCategoryTest_report.csv b/public/uploads/upload/csv_report/5c98d6318481725495fa4096/trackCategoryTest_report.csv
-deleted file mode 100644
-index ffc97a7..0000000
---- a/public/uploads/upload/csv_report/5c98d6318481725495fa4096/trackCategoryTest_report.csv
-+++ /dev/null
-@@ -1,7 +0,0 @@
--Track category name,Description,Status
--Building,"Development of high quality production features and supporting infrastructure. Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",Name 
--Executing,Technical leadership that empowers groups of people to deliver high quality work.,Name 
--Supporting,"Formal servant leadership that develops team members, advocates for them, supports their well being, and ensures an environment conducive to enabling effective work. Supporting the growth of the organization by working to improve processes.",Name 
--Strengthening,Guarding and improving Medium's culture. Representing Medium externally and drawing attention to the team’s successes. Establishing Medium as an attractive place to work. Leveling-up the team by spreading knowledge and developing colleagues’ skills.,Name 
--,Technical leadership.,Inserted
--Strengthening,"Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",Inserted
-diff --git a/public/uploads/upload/csv_report/5c98d7ef8481725495fa409d/trackCategoryTest_report.csv b/public/uploads/upload/csv_report/5c98d7ef8481725495fa409d/trackCategoryTest_report.csv
-deleted file mode 100644
-index 7949576..0000000
---- a/public/uploads/upload/csv_report/5c98d7ef8481725495fa409d/trackCategoryTest_report.csv
-+++ /dev/null
-@@ -1,7 +0,0 @@
--Track category name,Description,Status
--Building,"Development of high quality production features and supporting infrastructure. Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",Name is already taken
--Executing,Technical leadership that empowers groups of people to deliver high quality work.,Name is already taken
--Supporting,"Formal servant leadership that develops team members, advocates for them, supports their well being, and ensures an environment conducive to enabling effective work. Supporting the growth of the organization by working to improve processes.",Name is already taken
--Strengthening,Guarding and improving Medium's culture. Representing Medium externally and drawing attention to the team’s successes. Establishing Medium as an attractive place to work. Leveling-up the team by spreading knowledge and developing colleagues’ skills.,Name is already taken
--,Technical leadership.,Name can't be blank
--Strengthening,"Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",Name is already taken
-diff --git a/public/uploads/upload/csv_report/5c98d9138481725d90a13bde/trackCategoryTest_report.csv b/public/uploads/upload/csv_report/5c98d9138481725d90a13bde/trackCategoryTest_report.csv
-deleted file mode 100644
-index 02cf870..0000000
---- a/public/uploads/upload/csv_report/5c98d9138481725d90a13bde/trackCategoryTest_report.csv
-+++ /dev/null
-@@ -1,7 +0,0 @@
--Track category name,Description,Status
--Building,"Development of high quality production features and supporting infrastructure. Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",Inserted
--Executing,Technical leadership that empowers groups of people to deliver high quality work.,Inserted
--Supporting,"Formal servant leadership that develops team members, advocates for them, supports their well being, and ensures an environment conducive to enabling effective work. Supporting the growth of the organization by working to improve processes.",Inserted
--Strengthening,Guarding and improving Medium's culture. Representing Medium externally and drawing attention to the team’s successes. Establishing Medium as an attractive place to work. Leveling-up the team by spreading knowledge and developing colleagues’ skills.,Inserted
--,Technical leadership.,Name can't be blank
--Strengthening,"Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",Inserted
-diff --git a/public/uploads/upload/csv_report/5c98de358481725d90a13be5/trackTest_report.csv b/public/uploads/upload/csv_report/5c98de358481725d90a13be5/trackTest_report.csv
-deleted file mode 100644
-index 15a9f01..0000000
---- a/public/uploads/upload/csv_report/5c98de358481725d90a13be5/trackTest_report.csv
-+++ /dev/null
-@@ -1,7 +0,0 @@
--Track name,Description,Status
--Mobile,"Develops expertise in native mobile platform engineering, such as iOS or Android",Inserted
--Web Client,"Develops expertise in web client technologies, such as HTML, CSS, and JavaScript",Inserted
--Foundations,"Develops expertise in foundational systems, such as deployments, pipelines, databases and machine learning",Inserted
--Severs,"Develops expertise in server side engineering, using technologies such as Go, NodeJS, or Scala",Inserted
--Severs,"Develops expertise in using technologies such as Go, NodeJS, or Scala",Inserted
--,"Develops expertise in foundational systems, such as deployments, pipelines, databases and machine learning",Name can't be blank
-diff --git a/public/uploads/upload/csv_report/5c98e2138481725d90a13bec/levelTest_report.csv b/public/uploads/upload/csv_report/5c98e2138481725d90a13bec/levelTest_report.csv
-deleted file mode 100644
-index 41dbf04..0000000
---- a/public/uploads/upload/csv_report/5c98e2138481725d90a13bec/levelTest_report.csv
-+++ /dev/null
-@@ -1,5 +0,0 @@
--Seq. no.,Description,Example behaviour,Example task,Status
--,"Works effectively within established iOS or Android architectures, following current best practices","Delivers features requiring simple local modifications, Adds simple actions that call server endpoints, Reuses existing components appropriately","Added existing button to a different iOS surface, Add follow button for publications on Androi, Fetched and displayed a new stream, using existing stream item styles",Seq. no can't be blank
--,"Develops new instances of existing architecture, or minor improvements to existing architecture","Defines new useful and appropriate proto-generated objects, Creates simple new activities on Android, Migrates code from old patterns to new pattern","Upgraded SDWebImage to a new major version, Added support for rendering a new type of stream item, Prototyped a simple new feature quickly",Seq. no can't be blank
--,Designs major new features and demonstrates a nuanced understanding of mobile platform constraints,"Implements complex features with a large product surface area, Works effectively with  Android reactive programming framework",Designed iOS caching strategy for offline reading,Seq. no can't be blank
--,"Builds complex, reusable architectures that pioneer best practices and enable engineers to work more effectively","Fixes subtle memory management issues, Implements interactive dismissals that bring delight","Upgraded CocoaPods to a new major version, Designed architecture for fetching and rendering stream items",Seq. no can't be blank
-diff --git a/public/uploads/upload/csv_report/5c9c8e288481726fe3a8c5f0/roletest_report.csv b/public/uploads/upload/csv_report/5c9c8e288481726fe3a8c5f0/roletest_report.csv
-deleted file mode 100644
-index 106863f..0000000
---- a/public/uploads/upload/csv_report/5c9c8e288481726fe3a8c5f0/roletest_report.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Role name,Status
--,"Name [""Name can't be blank""]"
--,"Name [""Name can't be blank""]"
--,"Name [""Name can't be blank""]"
--,"Name [""Name can't be blank""]"
--,"Name [""Name can't be blank""]"
-diff --git a/public/uploads/upload/input_file/5c922de78481726d8c10e184/roletest.csv b/public/uploads/upload/input_file/5c922de78481726d8c10e184/roletest.csv
-deleted file mode 100644
-index 47f10e2..0000000
---- a/public/uploads/upload/input_file/5c922de78481726d8c10e184/roletest.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name
--System Engineer
--Associate Engineer
--
--Software Architecture
--System Engineer
-diff --git a/public/uploads/upload/input_file/5c922e658481726d8c10e188/roletest.csv b/public/uploads/upload/input_file/5c922e658481726d8c10e188/roletest.csv
-deleted file mode 100644
-index 47f10e2..0000000
---- a/public/uploads/upload/input_file/5c922e658481726d8c10e188/roletest.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name
--System Engineer
--Associate Engineer
--
--Software Architecture
--System Engineer
-diff --git a/public/uploads/upload/input_file/5c922e858481726d8c10e189/roletest.csv b/public/uploads/upload/input_file/5c922e858481726d8c10e189/roletest.csv
-deleted file mode 100644
-index 47f10e2..0000000
---- a/public/uploads/upload/input_file/5c922e858481726d8c10e189/roletest.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name
--System Engineer
--Associate Engineer
--
--Software Architecture
--System Engineer
-diff --git a/public/uploads/upload/input_file/5c922fa68481726f06dc8c67/roletest.csv b/public/uploads/upload/input_file/5c922fa68481726f06dc8c67/roletest.csv
-deleted file mode 100644
-index 47f10e2..0000000
---- a/public/uploads/upload/input_file/5c922fa68481726f06dc8c67/roletest.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name
--System Engineer
--Associate Engineer
--
--Software Architecture
--System Engineer
-diff --git a/public/uploads/upload/input_file/5c922fd98481726f5ec11d7d/roletest.csv b/public/uploads/upload/input_file/5c922fd98481726f5ec11d7d/roletest.csv
-deleted file mode 100644
-index 47f10e2..0000000
---- a/public/uploads/upload/input_file/5c922fd98481726f5ec11d7d/roletest.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name
--System Engineer
--Associate Engineer
--
--Software Architecture
--System Engineer
-diff --git a/public/uploads/upload/input_file/5c92330d848172705feb505f/roletest.csv b/public/uploads/upload/input_file/5c92330d848172705feb505f/roletest.csv
-deleted file mode 100644
-index 47f10e2..0000000
---- a/public/uploads/upload/input_file/5c92330d848172705feb505f/roletest.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name
--System Engineer
--Associate Engineer
--
--Software Architecture
--System Engineer
-diff --git a/public/uploads/upload/input_file/5c9233e5848172705feb5060/roletest.csv b/public/uploads/upload/input_file/5c9233e5848172705feb5060/roletest.csv
-deleted file mode 100644
-index 47f10e2..0000000
---- a/public/uploads/upload/input_file/5c9233e5848172705feb5060/roletest.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name
--System Engineer
--Associate Engineer
--
--Software Architecture
--System Engineer
-diff --git a/public/uploads/upload/input_file/5c92345e848172719949f165/roletest.csv b/public/uploads/upload/input_file/5c92345e848172719949f165/roletest.csv
-deleted file mode 100644
-index 47f10e2..0000000
---- a/public/uploads/upload/input_file/5c92345e848172719949f165/roletest.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name
--System Engineer
--Associate Engineer
--
--Software Architecture
--System Engineer
-diff --git a/public/uploads/upload/input_file/5c9234ed84817272fd1942b0/roletest.csv b/public/uploads/upload/input_file/5c9234ed84817272fd1942b0/roletest.csv
-deleted file mode 100644
-index 47f10e2..0000000
---- a/public/uploads/upload/input_file/5c9234ed84817272fd1942b0/roletest.csv
-+++ /dev/null
-@@ -1,6 +0,0 @@
--Name
--System Engineer
--Associate Engineer
--
--Software Architecture
--System Engineer
-diff --git a/public/uploads/upload/input_file/5c923e2b84817272fd1942b1/trackTest.csv b/public/uploads/upload/input_file/5c923e2b84817272fd1942b1/trackTest.csv
-deleted file mode 100644
-index 24979e6..0000000
---- a/public/uploads/upload/input_file/5c923e2b84817272fd1942b1/trackTest.csv
-+++ /dev/null
-@@ -1,7 +0,0 @@
--Name,Description
--Mobile,"Develops expertise in native mobile platform engineering, such as iOS or Android"
--Web Client,"Develops expertise in web client technologies, such as HTML, CSS, and JavaScript"
--Foundations,"Develops expertise in foundational systems, such as deployments, pipelines, databases and machine learning"
--Severs,"Develops expertise in server side engineering, using technologies such as Go, NodeJS, or Scala"
--Severs,"Develops expertise in using technologies such as Go, NodeJS, or Scala"
--,"Develops expertise in foundational systems, such as deployments, pipelines, databases and machine learning"
-diff --git a/public/uploads/upload/input_file/5c9881108481721fd8c87153/trackCategoryTest.csv b/public/uploads/upload/input_file/5c9881108481721fd8c87153/trackCategoryTest.csv
-deleted file mode 100644
-index f98c52e..0000000
---- a/public/uploads/upload/input_file/5c9881108481721fd8c87153/trackCategoryTest.csv
-+++ /dev/null
-@@ -1,7 +0,0 @@
--Name,Description,Indicators
--Building,"Development of high quality production features and supporting infrastructure. Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.","Problem Solving, Code Fluency, Autonomy"
--Executing,Technical leadership that empowers groups of people to deliver high quality work.,"Problem Solving, Do Hard Things"
--Supporting,"Formal servant leadership that develops team members, advocates for them, supports their well being, and ensures an environment conducive to enabling effective work. Supporting the growth of the organization by working to improve processes.","Instigate Change, Level Up"
--Strengthening,Guarding and improving Medium's culture. Representing Medium externally and drawing attention to the team’s successes. Establishing Medium as an attractive place to work. Leveling-up the team by spreading knowledge and developing colleagues’ skills.,"Communication, Level Up, Have Fun"
--,Technical leadership.,
--Strengthening,"Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",
-diff --git a/public/uploads/upload/input_file/5c98d4a08481725495fa408f/trackCategoryTest.csv b/public/uploads/upload/input_file/5c98d4a08481725495fa408f/trackCategoryTest.csv
-deleted file mode 100644
-index f98c52e..0000000
---- a/public/uploads/upload/input_file/5c98d4a08481725495fa408f/trackCategoryTest.csv
-+++ /dev/null
-@@ -1,7 +0,0 @@
--Name,Description,Indicators
--Building,"Development of high quality production features and supporting infrastructure. Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.","Problem Solving, Code Fluency, Autonomy"
--Executing,Technical leadership that empowers groups of people to deliver high quality work.,"Problem Solving, Do Hard Things"
--Supporting,"Formal servant leadership that develops team members, advocates for them, supports their well being, and ensures an environment conducive to enabling effective work. Supporting the growth of the organization by working to improve processes.","Instigate Change, Level Up"
--Strengthening,Guarding and improving Medium's culture. Representing Medium externally and drawing attention to the team’s successes. Establishing Medium as an attractive place to work. Leveling-up the team by spreading knowledge and developing colleagues’ skills.,"Communication, Level Up, Have Fun"
--,Technical leadership.,
--Strengthening,"Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",
-diff --git a/public/uploads/upload/input_file/5c98d6318481725495fa4096/trackCategoryTest.csv b/public/uploads/upload/input_file/5c98d6318481725495fa4096/trackCategoryTest.csv
-deleted file mode 100644
-index 1bfd445..0000000
---- a/public/uploads/upload/input_file/5c98d6318481725495fa4096/trackCategoryTest.csv
-+++ /dev/null
-@@ -1,7 +0,0 @@
--Track category name,Description,Indicators
--Building,"Development of high quality production features and supporting infrastructure. Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.","Problem Solving, Code Fluency, Autonomy"
--Executing,Technical leadership that empowers groups of people to deliver high quality work.,"Problem Solving, Do Hard Things"
--Supporting,"Formal servant leadership that develops team members, advocates for them, supports their well being, and ensures an environment conducive to enabling effective work. Supporting the growth of the organization by working to improve processes.","Instigate Change, Level Up"
--Strengthening,Guarding and improving Medium's culture. Representing Medium externally and drawing attention to the team’s successes. Establishing Medium as an attractive place to work. Leveling-up the team by spreading knowledge and developing colleagues’ skills.,"Communication, Level Up, Have Fun"
--,Technical leadership.,
--Strengthening,"Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",
-diff --git a/public/uploads/upload/input_file/5c98d7ef8481725495fa409d/trackCategoryTest.csv b/public/uploads/upload/input_file/5c98d7ef8481725495fa409d/trackCategoryTest.csv
-deleted file mode 100644
-index 1bfd445..0000000
---- a/public/uploads/upload/input_file/5c98d7ef8481725495fa409d/trackCategoryTest.csv
-+++ /dev/null
-@@ -1,7 +0,0 @@
--Track category name,Description,Indicators
--Building,"Development of high quality production features and supporting infrastructure. Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.","Problem Solving, Code Fluency, Autonomy"
--Executing,Technical leadership that empowers groups of people to deliver high quality work.,"Problem Solving, Do Hard Things"
--Supporting,"Formal servant leadership that develops team members, advocates for them, supports their well being, and ensures an environment conducive to enabling effective work. Supporting the growth of the organization by working to improve processes.","Instigate Change, Level Up"
--Strengthening,Guarding and improving Medium's culture. Representing Medium externally and drawing attention to the team’s successes. Establishing Medium as an attractive place to work. Leveling-up the team by spreading knowledge and developing colleagues’ skills.,"Communication, Level Up, Have Fun"
--,Technical leadership.,
--Strengthening,"Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",
-diff --git a/public/uploads/upload/input_file/5c98d9138481725d90a13bde/trackCategoryTest.csv b/public/uploads/upload/input_file/5c98d9138481725d90a13bde/trackCategoryTest.csv
-deleted file mode 100644
-index 1bfd445..0000000
---- a/public/uploads/upload/input_file/5c98d9138481725d90a13bde/trackCategoryTest.csv
-+++ /dev/null
-@@ -1,7 +0,0 @@
--Track category name,Description,Indicators
--Building,"Development of high quality production features and supporting infrastructure. Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.","Problem Solving, Code Fluency, Autonomy"
--Executing,Technical leadership that empowers groups of people to deliver high quality work.,"Problem Solving, Do Hard Things"
--Supporting,"Formal servant leadership that develops team members, advocates for them, supports their well being, and ensures an environment conducive to enabling effective work. Supporting the growth of the organization by working to improve processes.","Instigate Change, Level Up"
--Strengthening,Guarding and improving Medium's culture. Representing Medium externally and drawing attention to the team’s successes. Establishing Medium as an attractive place to work. Leveling-up the team by spreading knowledge and developing colleagues’ skills.,"Communication, Level Up, Have Fun"
--,Technical leadership.,
--Strengthening,"Leveraging empathy for the client to understand problems thoroughly, and experience to design appropriate technical solutions.",
-diff --git a/public/uploads/upload/input_file/5c98de358481725d90a13be5/trackTest.csv b/public/uploads/upload/input_file/5c98de358481725d90a13be5/trackTest.csv
-deleted file mode 100644
-index 3aeafad..0000000
---- a/public/uploads/upload/input_file/5c98de358481725d90a13be5/trackTest.csv
-+++ /dev/null
-@@ -1,7 +0,0 @@
--Track name,Description
--Mobile,"Develops expertise in native mobile platform engineering, such as iOS or Android"
--Web Client,"Develops expertise in web client technologies, such as HTML, CSS, and JavaScript"
--Foundations,"Develops expertise in foundational systems, such as deployments, pipelines, databases and machine learning"
--Severs,"Develops expertise in server side engineering, using technologies such as Go, NodeJS, or Scala"
--Severs,"Develops expertise in using technologies such as Go, NodeJS, or Scala"
--,"Develops expertise in foundational systems, such as deployments, pipelines, databases and machine learning"
-diff --git a/public/uploads/upload/input_file/5c98e2138481725d90a13bec/levelTest.csv b/public/uploads/upload/input_file/5c98e2138481725d90a13bec/levelTest.csv
-deleted file mode 100644
-index 691194c..0000000
---- a/public/uploads/upload/input_file/5c98e2138481725d90a13bec/levelTest.csv
-+++ /dev/null
-@@ -1,5 +0,0 @@
--Seq. No,Description,Example behaviour,Example task
--1,"Works effectively within established iOS or Android architectures, following current best practices","Delivers features requiring simple local modifications, Adds simple actions that call server endpoints, Reuses existing components appropriately","Added existing button to a different iOS surface, Add follow button for publications on Androi, Fetched and displayed a new stream, using existing stream item styles"
--2,"Develops new instances of existing architecture, or minor improvements to existing architecture","Defines new useful and appropriate proto-generated objects, Creates simple new activities on Android, Migrates code from old patterns to new pattern","Upgraded SDWebImage to a new major version, Added support for rendering a new type of stream item, Prototyped a simple new feature quickly"
--,Designs major new features and demonstrates a nuanced understanding of mobile platform constraints,"Implements complex features with a large product surface area, Works effectively with  Android reactive programming framework",Designed iOS caching strategy for offline reading
--2,"Builds complex, reusable architectures that pioneer best practices and enable engineers to work more effectively","Fixes subtle memory management issues, Implements interactive dismissals that bring delight","Upgraded CocoaPods to a new major version, Designed architecture for fetching and rendering stream items"
-diff --git a/public/uploads/upload/input_file/5c9b3c2684817222b3c2999c/49dfd72de3d015476a0a.json b/public/uploads/upload/input_file/5c9b3c2684817222b3c2999c/49dfd72de3d015476a0a.json
-deleted file mode 100644
-index 99a7523..0000000
---- a/public/uploads/upload/input_file/5c9b3c2684817222b3c2999c/49dfd72de3d015476a0a.json
-+++ /dev/null
-@@ -1 +0,0 @@
--{"id":"34c78945-b0ae-d1d7-9849-1623247ed242","name":"Elasticsearch Training","description":"","order":["5d201a76-ae14-1df6-d8a2-ef9e8eda9b1a","b3b74429-6fbf-71a4-cd8b-b43847bc19e0","c5a3b0be-0c0b-f114-6d86-327e4192bbb3","abf2978d-bd32-8483-456f-df59ff25e794","9904aa10-7b4e-58f4-c3f4-113385cb18b6","e08b6a97-e7c0-a7cf-c529-2582306161ac","5011c459-454a-715d-8687-c4e90b1e20f0","9b606269-9e99-073c-3026-a46faad06b07","9820b15e-e878-3398-daea-e3675df7d5eb","ba710baa-4183-16ab-0dd5-590d5ddce80f","ef18ffb8-a40f-0b2a-29b8-4e5d28e8259e","177627f2-8890-8ca4-f12a-0e1720e18930","53c66dda-16bd-4ba6-f372-1abc120d913e","393a1240-e5e7-9af3-255a-ca9a6ce1a0ad","7405eadb-e5fc-a6a8-11d6-31e958132f07","36435b93-afbd-df6e-9eae-7d70da153da3","9e3e0bd0-f888-655f-bbfa-66239e6eb09e","c31405c7-bf81-5323-d7dd-944905e1ac63","732bee68-c493-57bd-08e8-b1f2d2ecaf3e","48c3a953-1987-85a0-16ae-f4a148ab43a0"],"folders":[],"folders_order":[],"timestamp":1550335778749,"owner":"143124","public":false,"requests":[{"id":"177627f2-8890-8ca4-f12a-0e1720e18930","headers":"Content-Type: application\/json\n","headerData":[{"key":"Content-Type","value":"application\/json","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/article\/_search","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"POST","data":[],"dataMode":"raw","version":2,"tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550758792835,"name":"(match) Get all articles with title containing \"world\"","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[],"rawModeData":"{\n\t\"query\": {\n\t\t\"match\": {\n\t\t\t\"title\": \"world\"\n\t\t}\n\t}\n}"},{"id":"36435b93-afbd-df6e-9eae-7d70da153da3","headers":"Content-Type: application\/json\n","headerData":[{"key":"Content-Type","value":"application\/json","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/article\/_search","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"POST","data":[],"dataMode":"raw","version":2,"tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550764671611,"name":"(terms) Get all published and draft articles","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[],"rawModeData":"{\n\t\"query\": {\n\t\t\"terms\": {\n\t\t\t\"status\": [\"draft\", \"published\"]\n\t\t}\n\t}\n}"},{"id":"393a1240-e5e7-9af3-255a-ca9a6ce1a0ad","headers":"Content-Type: application\/json\n","headerData":[{"key":"Content-Type","value":"application\/json","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/article\/_search","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"POST","data":[],"dataMode":"raw","version":2,"tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550759867859,"name":"(multi_match) Get articles with the title|body having \"station\"","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[],"rawModeData":"{\n\t\"sort\": {\n\t\t\"status\": \"asc\"\n\t},\n\t\"query\": {\n\t\t\"multi_match\": {\n\t\t\t\"query\": \"station bus\",\n\t\t\t\"operator\": \"and\",\n\t\t\t\"fields\": [\"body\", \"title\"]\n\t\t}\n\t}\n}"},{"id":"48c3a953-1987-85a0-16ae-f4a148ab43a0","headers":"Content-Type: application\/json\n","headerData":[{"key":"Content-Type","value":"application\/json","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/article\/_search","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"POST","data":[],"dataMode":"raw","version":2,"tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550771648849,"name":"(aggs) Get count of published articles grouped by month","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[],"rawModeData":"{\n\t\"size\": 0,\n\t\"query\": {\n\t\t\"term\": { \"status\": \"published\" }\n\t},\n\t\"aggs\": {\n\t\t\"monthly_articles\": {\n\t\t\t\"date_histogram\": {\n\t\t\t\t\"field\": \"published_at\",\n\t\t\t\t\"interval\": \"month\"\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"article\": {\n\t\t\t\t\t\"terms\": { \"field\": \"published_at\" }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}"},{"id":"5011c459-454a-715d-8687-c4e90b1e20f0","headers":"","headerData":[],"url":"http:\/\/localhost:9200\/article\/_doc\/1","queryParams":[],"pathVariables":[],"pathVariableData":[],"preRequestScript":null,"method":"GET","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","data":null,"dataMode":"params","name":"Get article document","description":"","descriptionFormat":"html","time":1550709113499,"version":2,"responses":[],"tests":null,"currentHelper":"normal","helperAttributes":[]},{"id":"53c66dda-16bd-4ba6-f372-1abc120d913e","headers":"Content-Type: application\/json\n","headerData":[{"key":"Content-Type","value":"application\/json","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/article\/_search","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"POST","data":[],"dataMode":"raw","version":2,"tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550758869223,"name":"(match_pharse) Match articles for given pharse","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[],"rawModeData":"{\n\t\"query\": {\n\t\t\"match_phrase\": {\n\t\t\t\"body\": \"Mary and Samantha\"\n\t\t}\n\t}\n}"},{"id":"5d201a76-ae14-1df6-d8a2-ef9e8eda9b1a","headers":"","headerData":[],"url":"http:\/\/localhost:9200","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"GET","data":null,"dataMode":"params","tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550350074145,"name":"Root","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[]},{"id":"732bee68-c493-57bd-08e8-b1f2d2ecaf3e","headers":"Content-Type: application\/json\n","headerData":[{"key":"Content-Type","value":"application\/json","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/article\/_search","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"POST","data":[],"dataMode":"raw","version":2,"tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550771071974,"name":"(aggs) Get count of articles grouped by status","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[],"rawModeData":"{\n\t\"aggs\": {\n\t\t\"articles\": {\n\t\t\t\"terms\": { \"field\": \"status\" }\n\t\t}\n\t}\n}"},{"id":"7405eadb-e5fc-a6a8-11d6-31e958132f07","headers":"Content-Type: application\/json\n","headerData":[{"key":"Content-Type","value":"application\/json","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/article\/_search","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"POST","data":[],"dataMode":"raw","version":2,"tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550759420505,"name":"(term) Find articles having status \"published\"","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[],"rawModeData":"{\n\t\"query\": {\n\t\t\"term\": {\n\t\t\t\"status\": \"published\"\n\t\t}\n\t}\n}"},{"id":"9820b15e-e878-3398-daea-e3675df7d5eb","headers":"Content-Type: application\/x-ndjson\n","headerData":[{"key":"Content-Type","value":"application\/x-ndjson","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/article\/_doc\/_bulk","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"POST","data":[],"dataMode":"raw","tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550759784529,"name":"Bulk actions on Article","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[],"rawModeData":"{ \"index\": { \"_id\": 2 } }\n{ \"title\": \"Electric Thief\", \"body\": \"The shortest article. Ever.\", \"status\": \"draft\" }\n\n{ \"index\": { \"_id\": 3 } }\n{ \"title\": \"Bloody City\", \"body\": \"Mary and Samantha arrived at the bus station early\", \"status\": \"draft\" }\n\n{ \"index\": { \"_id\": 4 } }\n{ \"title\": \"Christmas on Bus Station\", \"body\": \"Joe waited for the train, but the train was late.\", \"status\": \"draft\" }\n\n{ \"index\": { \"_id\": 5 } }\n{ \"title\": \"The Monster from South World\", \"body\": \"Because Mary and Samantha arrived at the bus station before noon, I did not see them at the station.\", \"status\": \"published\", \"published_at\": \"2019-02-22T09:47:50Z\" }\n\n\n{ \"index\": { \"_id\": 6 } }\n{ \"title\": \"Day of the World\", \"body\": \"There is nothing wrong with beginning a sentence with 'because.'\", \"status\": \"published\", \"published_at\": \"2019-02-21T09:47:50Z\" }\n\n{ \"delete\": { \"_id\": 1 } }\n"},{"id":"9904aa10-7b4e-58f4-c3f4-113385cb18b6","headers":"Content-Type: application\/json\n","headerData":[{"key":"Content-Type","value":"application\/json","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/_analyze","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"POST","data":[],"dataMode":"raw","tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550795863396,"name":"One more analyze example","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[],"rawModeData":"{\n  \"char_filter\": [\"html_strip\"],\n  \"tokenizer\": \"keyword\",\n  \"filter\": [\"lowercase\"],\n  \"text\": \"THIS is a <b>test<\/b>\"\n}"},{"id":"9b606269-9e99-073c-3026-a46faad06b07","headers":"","headerData":[],"url":"http:\/\/localhost:9200\/article\/_doc\/1","queryParams":[],"pathVariables":[],"pathVariableData":[],"preRequestScript":null,"method":"DELETE","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","data":null,"dataMode":"params","name":"Delete article document","description":"","descriptionFormat":"html","time":1550709407194,"version":2,"responses":[],"tests":null,"currentHelper":"normal","helperAttributes":[]},{"id":"9e3e0bd0-f888-655f-bbfa-66239e6eb09e","headers":"Content-Type: application\/json\n","headerData":[{"key":"Content-Type","value":"application\/json","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/article\/_search","queryParams":[],"pathVariables":[],"pathVariableData":[],"preRequestScript":null,"method":"POST","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","data":[],"dataMode":"raw","name":"(range) Get all articles published in between given range","description":"","descriptionFormat":"html","time":1550764938383,"version":2,"responses":[],"tests":null,"currentHelper":"normal","helperAttributes":[],"rawModeData":"{\n\t\"query\": {\n\t\t\"range\": {\n\t\t\t\"published_at\": {\n\t\t\t\t\"lt\": \"now\",\n\t\t\t\t\"gt\": \"now-2d\"\n\t\t\t}\n\t\t}\n\t}\n}"},{"id":"abf2978d-bd32-8483-456f-df59ff25e794","headers":"Content-Type: application\/json\n","headerData":[{"key":"Content-Type","value":"application\/json","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/_analyze","queryParams":[],"pathVariables":[],"pathVariableData":[],"preRequestScript":null,"method":"POST","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","data":[],"dataMode":"raw","name":"Analyze exmaple","description":"","descriptionFormat":"html","time":1550703702864,"version":2,"responses":[],"tests":null,"currentHelper":"normal","helperAttributes":[],"rawModeData":"{\n  \"analyzer\": \"english\",\n  \"text\": \"The 2 QUICK Brown-Foxes jumped over the lazy dog's bone.\"\n}"},{"id":"b3b74429-6fbf-71a4-cd8b-b43847bc19e0","headers":"","headerData":[],"url":"http:\/\/localhost:9200\/_cat\/indices?v","queryParams":[{"key":"v","value":"","equals":false,"description":"","enabled":true}],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"GET","data":null,"dataMode":"params","tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550652638039,"name":"List Indices","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[]},{"id":"ba710baa-4183-16ab-0dd5-590d5ddce80f","headers":"","headerData":[],"url":"http:\/\/localhost:9200\/article","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"DELETE","data":null,"dataMode":"params","tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550653049276,"name":"Delete Article index","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[]},{"id":"c31405c7-bf81-5323-d7dd-944905e1ac63","headers":"Content-Type: application\/json\n","headerData":[{"key":"Content-Type","value":"application\/json","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/article\/_search","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"POST","data":[],"dataMode":"raw","version":2,"tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550767628833,"name":"(bool) List all draft blogs containing \"bus\" in title or body","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[],"rawModeData":"{\n\t\"query\": {\n\t\t\"bool\": {\n\t\t\t\"must\": [\n\t\t\t\t{ \"term\": { \"status\": \"draft\" } },\n\n\t\t\t\t{\n\t\t\t\t\t\"multi_match\": {\n\t\t\t\t\t\t\"query\": \"bus\",\n\t\t\t\t\t\t\"fields\": [\"title^2\", \"body\"]\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t}\n}"},{"id":"c5a3b0be-0c0b-f114-6d86-327e4192bbb3","headers":"Content-Type: application\/json\n","headerData":[{"key":"Content-Type","value":"application\/json","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/article","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"PUT","data":[],"dataMode":"raw","tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550653083131,"name":"Create Article index","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[],"rawModeData":"{\n \"settings\": {\n \t\"index\": {\n \t\t\"number_of_shards\": 1,\n \t\t\"number_of_replicas\": 0\n \t}\n },\n \n \"mappings\": {\n \t\"_doc\": {\n \t\t\"properties\": {\n \t\t\t\"title\": { \"type\": \"text\", \"analyzer\": \"standard\"  },\n \t\t\t\"body\": { \"type\": \"text\"  },\n \t\t\t\"published_at\": { \"type\": \"date\" },\n \t\t\t\"status\": { \"type\": \"keyword\" }\n \t\t}\n \t}\n }\n}"},{"id":"e08b6a97-e7c0-a7cf-c529-2582306161ac","headers":"Content-Type: application\/json\n","headerData":[{"key":"Content-Type","value":"application\/json","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/article\/_doc\/1","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"PUT","data":[],"dataMode":"raw","version":2,"tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550797373409,"name":"Upsert Article document","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[],"rawModeData":"{\n\t\"title\": \"Hello World!\",\n\t\"body\": \"This is some body for first article\",\n\t\"status\": \"draft\"\n}"},{"id":"ef18ffb8-a40f-0b2a-29b8-4e5d28e8259e","headers":"Content-Type: application\/json\n","headerData":[{"key":"Content-Type","value":"application\/json","description":"","enabled":true}],"url":"http:\/\/localhost:9200\/article\/_search","queryParams":[],"preRequestScript":null,"pathVariables":[],"pathVariableData":[],"method":"POST","data":[],"dataMode":"raw","tests":null,"currentHelper":"normal","helperAttributes":[],"time":1550727342304,"name":"(match_all) Get all articles","description":"","collectionId":"34c78945-b0ae-d1d7-9849-1623247ed242","responses":[],"rawModeData":"{\n\t\"query\": {\n\t\t\"match_all\": {}\n\t}\n}"}]}
-\ No newline at end of file
-diff --git a/public/uploads/upload/input_file/5c9b3c4084817222b3c2999d/csvtest.rb b/public/uploads/upload/input_file/5c9b3c4084817222b3c2999d/csvtest.rb
-deleted file mode 100644
-index 93ff692..0000000
---- a/public/uploads/upload/input_file/5c9b3c4084817222b3c2999d/csvtest.rb
-+++ /dev/null
-@@ -1,12 +0,0 @@
--require 'csv'
--csv_text = File.read('test.csv')
--csv = CSV.parse(csv_text, headers: true)
--csv.each do |row|
--  #rowi = row.to_hash
--  puts "#{row}"
--  puts "#{row.fetch('email')}"
--  puts "#{row.fetch('name')}"
--  #puts "#{rowi}"
--  puts "#{row.class}"
--  #puts "#{rowi.class}"
+-class TrackCategorySerializer < ActiveModel::Serializer
+-	attributes :name
+-	has_many :tracks
+-	belongs_to :role
 -end
-diff --git a/public/uploads/upload/input_file/5c9c8e288481726fe3a8c5f0/roletest.csv b/public/uploads/upload/input_file/5c9c8e288481726fe3a8c5f0/roletest.csv
+\ No newline at end of file
+diff --git a/app/serializers/track_serializer.rb b/app/serializers/track_serializer.rb
 deleted file mode 100644
-index 47f10e2..0000000
---- a/public/uploads/upload/input_file/5c9c8e288481726fe3a8c5f0/roletest.csv
+index d41fe8d..0000000
+--- a/app/serializers/track_serializer.rb
 +++ /dev/null
-@@ -1,6 +0,0 @@
--Name
--System Engineer
--Associate Engineer
+@@ -1,22 +0,0 @@
+-class TrackSerializer < ActiveModel::Serializer
 -
--Software Architecture
--System Engineer
-diff --git a/spec/models/level_spec.rb b/spec/models/level_spec.rb
-index 6a2d089..909c27d 100644
---- a/spec/models/level_spec.rb
-+++ b/spec/models/level_spec.rb
-@@ -7,5 +7,7 @@ RSpec.describe Level do
-   it { should belong_to(:track) }
- 
-   it { should validate_presence_of(:seq_no) }
-+  it { should validate_uniqueness_of(:seq_no).scoped_to(
-+    [:role, :track_category, :track]) }
-   
- end
+-  attributes :name, :description
+-  
+-  has_many :levels
+-
+-  def self.serialize_tracks(tracks)
+-    tracks.map{|track| self.serialize_track(track)}
+-  end
+-
+-  def self.serialize_track(track)
+-  {
+-    "#{track.name.upcase}": 
+-    {
+-    displayName: track.name,  
+-    category: track.track_category.name,
+-    description: track.description,
+-    milestones: ActiveModel::SerializableResource.new(track.levels).as_json
+-    }
+-  }
+-  end
+-end
 \ No newline at end of file
-diff --git a/spec/models/track_category_spec.rb b/spec/models/track_category_spec.rb
-index a0c4520..72a4e85 100644
---- a/spec/models/track_category_spec.rb
-+++ b/spec/models/track_category_spec.rb
-@@ -8,5 +8,6 @@ RSpec.describe TrackCategory do
-   it { should belong_to(:role) }
- 
-   it { should validate_presence_of(:name) }
-+  it { should validate_uniqueness_of(:name).scoped_to(:role) }
-     
- end
-\ No newline at end of file
-diff --git a/spec/models/track_spec.rb b/spec/models/track_spec.rb
-index 7cdce91..0593f92 100644
---- a/spec/models/track_spec.rb
-+++ b/spec/models/track_spec.rb
-@@ -8,5 +8,6 @@ RSpec.describe Track do
-   it { should belong_to(:track_category) }
- 
-   it { should validate_presence_of(:name) }
-+  it { should validate_uniqueness_of(:name).scoped_to([:role, :track_category]) }
-   
- end
-\ No newline at end of file
-diff --git a/spec/rails_helper.rb b/spec/rails_helper.rb
-index bf786af..d21ef77 100644
---- a/spec/rails_helper.rb
-+++ b/spec/rails_helper.rb
-@@ -1,8 +1,6 @@
- # This file is copied to spec/ when you run 'rails generate rspec:install'
- require 'spec_helper'
- 
--ENV['RAILS_ENV'] ||= 'test'
--require File.expand_path('../../config/environment', __FILE__)
- # Prevent database truncation if the environment is production
- abort("The Rails environment is running in production mode!") if Rails.env.production?
- 
-diff --git a/spec/spec_helper.rb b/spec/spec_helper.rb
-index a9a627f..0af374b 100644
---- a/spec/spec_helper.rb
-+++ b/spec/spec_helper.rb
-@@ -13,8 +13,15 @@
- # it.
- #
- # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-+ENV["RAILS_ENV"] ||= 'test'
-+require File.expand_path("../../config/environment", __FILE__)
-+require 'mongoid'
-+require 'rspec/rails'
- require 'factory_bot_rails'
-+require 'rails/mongoid'
-+require 'database_cleaner'
- require 'mongoid-rspec'
-+require 'rails_helper'
- 
- RSpec.configure do |config|
-   config.include Mongoid::Matchers
-@@ -100,3 +107,7 @@ RSpec.configure do |config|
-   Kernel.srand config.seed
- =end
- end
-+  RspecApiDocumentation.configure do |config|
-+    config.format = :json
-+  end
-+

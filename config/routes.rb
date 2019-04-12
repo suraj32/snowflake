@@ -14,6 +14,8 @@ Rails.application.routes.draw do
         resources :users
         get '/get_static_data', to: 'users#get_static_data'
         post '/create_assessment', to: 'users#create_assessment'
+        get '/get_assessment', to: 'users#get_assessment'
+        post '/update_assessment', to: 'users#update_assessment'
       end
     end
     root 'users#new'
