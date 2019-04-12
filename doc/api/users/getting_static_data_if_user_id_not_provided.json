@@ -1,0 +1,48 @@
+{
+  "resource": "Users",
+  "resource_explanation": "Orders resource",
+  "http_method": "GET",
+  "route": "/snowflake/v1/get_static_data",
+  "description": "Getting static data if user_id not provided",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/snowflake/v1/get_static_data",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[\n  {\n    \"id\": {\n      \"$oid\": \"5cb09c4b8481724d2e58ae01\"\n    },\n    \"name\": \"Forward Mining Technician\",\n    \"track_categories\": [\n      {\n        \"id\": {\n          \"$oid\": \"5cb09c4b8481724d2e58ae02\"\n        },\n        \"name\": \"Manufacturing\",\n        \"description\": \"Impedit placeat corporis. Velit est qui. Qui cum earum.\",\n        \"tracks\": [\n          {\n            \"id\": {\n              \"$oid\": \"5cb09c4b8481724d2e58ae04\"\n            },\n            \"name\": \"Leadership\",\n            \"description\": \"Quis voluptatem aperiam. Tempore similique ex. Nemo quo eos.\",\n            \"levels\": [\n              {\n                \"id\": {\n                  \"$oid\": \"5cb09c4b8481724d2e58ae09\"\n                },\n                \"seq_no\": 493,\n                \"description\": \"Est autem voluptatem. Id similique inventore. Dolor voluptate exercitationem.\",\n                \"example_behaviour\": [\n                  \"Et aut veritatis.\",\n                  \"Error nihil iusto.\",\n                  \"Corporis culpa soluta.\"\n                ],\n                \"example_task\": [\n                  \"Sunt vel ut.\",\n                  \"Tenetur quo ut.\",\n                  \"Consequatur mollitia et.\"\n                ]\n              },\n              {\n                \"id\": {\n                  \"$oid\": \"5cb09c4b8481724d2e58ae08\"\n                },\n                \"seq_no\": 51,\n                \"description\": \"Eveniet voluptate magni. Recusandae molestiae ipsa. Consequatur unde voluptatem.\",\n                \"example_behaviour\": [\n                  \"Vel debitis quia.\",\n                  \"Facere laborum et.\",\n                  \"Rem nulla dicta.\"\n                ],\n                \"example_task\": [\n                  \"Aut porro magni.\",\n                  \"Eaque qui aliquam.\",\n                  \"Distinctio et voluptatum.\"\n                ]\n              }\n            ]\n          },\n          {\n            \"id\": {\n              \"$oid\": \"5cb09c4b8481724d2e58ae05\"\n            },\n            \"name\": \"Confidence\",\n            \"description\": \"Vel autem libero. Temporibus labore vero. Facere dolorem aut.\",\n            \"levels\": [\n              {\n                \"id\": {\n                  \"$oid\": \"5cb09c4b8481724d2e58ae0a\"\n                },\n                \"seq_no\": 496,\n                \"description\": \"Doloremque non non. Ut et autem. Laboriosam voluptas impedit.\",\n                \"example_behaviour\": [\n                  \"Corporis molestiae qui.\",\n                  \"Necessitatibus officiis optio.\",\n                  \"Similique quo incidunt.\"\n                ],\n                \"example_task\": [\n                  \"Dolorem iure qui.\",\n                  \"Ex vel voluptas.\",\n                  \"Magni magnam suscipit.\"\n                ]\n              },\n              {\n                \"id\": {\n                  \"$oid\": \"5cb09c4b8481724d2e58ae0b\"\n                },\n                \"seq_no\": 315,\n                \"description\": \"Tempora praesentium velit. Et iste inventore. Est quia voluptatem.\",\n                \"example_behaviour\": [\n                  \"Aut voluptatum aliquid.\",\n                  \"In vel qui.\",\n                  \"Corrupti omnis fuga.\"\n                ],\n                \"example_task\": [\n                  \"Dolor et inventore.\",\n                  \"Consequatur magni temporibus.\",\n                  \"Et corporis omnis.\"\n                ]\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"id\": {\n          \"$oid\": \"5cb09c4b8481724d2e58ae03\"\n        },\n        \"name\": \"IT\",\n        \"description\": \"Odio mollitia quia. Aut illum voluptatem. Voluptas necessitatibus illum.\",\n        \"tracks\": [\n          {\n            \"id\": {\n              \"$oid\": \"5cb09c4b8481724d2e58ae06\"\n            },\n            \"name\": \"Work under pressure\",\n            \"description\": \"Laborum voluptate quibusdam. Perspiciatis non libero. Doloremque error quidem.\",\n            \"levels\": [\n              {\n                \"id\": {\n                  \"$oid\": \"5cb09c4b8481724d2e58ae0c\"\n                },\n                \"seq_no\": 86,\n                \"description\": \"Adipisci sed est. Tempore quia repellat. Vel commodi iste.\",\n                \"example_behaviour\": [\n                  \"Delectus facilis accusamus.\",\n                  \"Quia rerum nisi.\",\n                  \"Aut voluptate quas.\"\n                ],\n                \"example_task\": [\n                  \"Ipsum nam quasi.\",\n                  \"Sed dignissimos aspernatur.\",\n                  \"Voluptatem est non.\"\n                ]\n              },\n              {\n                \"id\": {\n                  \"$oid\": \"5cb09c4b8481724d2e58ae0d\"\n                },\n                \"seq_no\": 304,\n                \"description\": \"Distinctio corporis cupiditate. Et nulla minus. Voluptatem corporis amet.\",\n                \"example_behaviour\": [\n                  \"Quisquam saepe nobis.\",\n                  \"Porro animi necessitatibus.\",\n                  \"Voluptas magni ut.\"\n                ],\n                \"example_task\": [\n                  \"Officia voluptate vitae.\",\n                  \"Non voluptas et.\",\n                  \"Aliquam necessitatibus debitis.\"\n                ]\n              }\n            ]\n          },\n          {\n            \"id\": {\n              \"$oid\": \"5cb09c4b8481724d2e58ae07\"\n            },\n            \"name\": \"Fast learner\",\n            \"description\": \"Nihil nulla quam. Culpa impedit aspernatur. Occaecati harum qui.\",\n            \"levels\": [\n              {\n                \"id\": {\n                  \"$oid\": \"5cb09c4b8481724d2e58ae0e\"\n                },\n                \"seq_no\": 41,\n                \"description\": \"Placeat dolorem omnis. Voluptas possimus sequi. Saepe minima assumenda.\",\n                \"example_behaviour\": [\n                  \"Ut quo voluptatum.\",\n                  \"Autem soluta velit.\",\n                  \"Velit eius eaque.\"\n                ],\n                \"example_task\": [\n                  \"Repellendus ut assumenda.\",\n                  \"Magni porro veritatis.\",\n                  \"Ut non iure.\"\n                ]\n              },\n              {\n                \"id\": {\n                  \"$oid\": \"5cb09c4b8481724d2e58ae0f\"\n                },\n                \"seq_no\": 491,\n                \"description\": \"Nesciunt quod aut. Voluptatibus deserunt voluptas. Sint autem expedita.\",\n                \"example_behaviour\": [\n                  \"Dolorum aspernatur qui.\",\n                  \"Nisi debitis voluptatem.\",\n                  \"Molestiae qui dicta.\"\n                ],\n                \"example_task\": [\n                  \"Ex vel libero.\",\n                  \"Magni aliquid aut.\",\n                  \"Sequi sunt pariatur.\"\n                ]\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  }\n]",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"10bfc8f055eb1083cc91f628fb657a86\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "9f9b67b7-c09e-41d3-bde0-c5d228580425",
+        "X-Runtime": "0.046684",
+        "Content-Length": "3598"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+    }
+  ]
+}

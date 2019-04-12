@@ -1,0 +1,49 @@
+{
+  "resource": "Users",
+  "resource_explanation": "Orders resource",
+  "http_method": "GET",
+  "route": "/snowflake/v1/get_static_data",
+  "description": "Getting static data if user_id provided",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/snowflake/v1/get_static_data?user_id=5cb09c4b8481724d2e58ae10",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "user_id": "5cb09c4b8481724d2e58ae10"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\n  \"id\": {\n    \"$oid\": \"5cb09c4b8481724d2e58ae11\"\n  },\n  \"name\": \"Lead Education Coordinator\",\n  \"track_categories\": [\n    {\n      \"id\": {\n        \"$oid\": \"5cb09c4b8481724d2e58ae12\"\n      },\n      \"name\": \"Education\",\n      \"description\": \"Nam cum dolorum. Vero pariatur et. Autem placeat sunt.\",\n      \"tracks\": [\n        {\n          \"id\": {\n            \"$oid\": \"5cb09c4b8481724d2e58ae14\"\n          },\n          \"name\": \"Work under pressure\",\n          \"description\": \"Nam a nihil. Laudantium in et. Nesciunt maiores iure.\",\n          \"levels\": [\n            {\n              \"id\": {\n                \"$oid\": \"5cb09c4b8481724d2e58ae18\"\n              },\n              \"seq_no\": 481,\n              \"description\": \"Laboriosam eius voluptatem. Officia et ut. Nemo maiores voluptas.\",\n              \"example_behaviour\": [\n                \"Repudiandae ipsum molestiae.\",\n                \"Sint necessitatibus officia.\",\n                \"Numquam nulla error.\"\n              ],\n              \"example_task\": [\n                \"Id qui laboriosam.\",\n                \"Quisquam nesciunt est.\",\n                \"Facere nisi nulla.\"\n              ]\n            },\n            {\n              \"id\": {\n                \"$oid\": \"5cb09c4b8481724d2e58ae19\"\n              },\n              \"seq_no\": 74,\n              \"description\": \"Qui non et. Ducimus alias nostrum. Et autem quaerat.\",\n              \"example_behaviour\": [\n                \"Fugiat consequatur tempora.\",\n                \"Quia inventore eveniet.\",\n                \"Asperiores corporis omnis.\"\n              ],\n              \"example_task\": [\n                \"Id ipsa sunt.\",\n                \"Non facere tempora.\",\n                \"Doloribus aliquid voluptatem.\"\n              ]\n            }\n          ]\n        },\n        {\n          \"id\": {\n            \"$oid\": \"5cb09c4b8481724d2e58ae15\"\n          },\n          \"name\": \"Problem solving\",\n          \"description\": \"Quod qui architecto. Nisi et et. Qui quia eum.\",\n          \"levels\": [\n            {\n              \"id\": {\n                \"$oid\": \"5cb09c4b8481724d2e58ae1a\"\n              },\n              \"seq_no\": 465,\n              \"description\": \"Dolorem aut delectus. Perspiciatis similique atque. Provident dolores asperiores.\",\n              \"example_behaviour\": [\n                \"Cum odit sunt.\",\n                \"Sit molestiae sunt.\",\n                \"Voluptatem at eaque.\"\n              ],\n              \"example_task\": [\n                \"Animi labore qui.\",\n                \"Dolorem laudantium esse.\",\n                \"Maiores sint tenetur.\"\n              ]\n            },\n            {\n              \"id\": {\n                \"$oid\": \"5cb09c4b8481724d2e58ae1b\"\n              },\n              \"seq_no\": 400,\n              \"description\": \"Molestiae voluptatum nulla. Quam unde magni. Quam suscipit et.\",\n              \"example_behaviour\": [\n                \"Esse omnis commodi.\",\n                \"Nesciunt quia est.\",\n                \"Eos quia sed.\"\n              ],\n              \"example_task\": [\n                \"Sed sed accusantium.\",\n                \"Impedit aut consequuntur.\",\n                \"Ea est tenetur.\"\n              ]\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": {\n        \"$oid\": \"5cb09c4b8481724d2e58ae13\"\n      },\n      \"name\": \"IT\",\n      \"description\": \"Ducimus ipsam neque. Qui porro perferendis. Ut ratione fugiat.\",\n      \"tracks\": [\n        {\n          \"id\": {\n            \"$oid\": \"5cb09c4b8481724d2e58ae16\"\n          },\n          \"name\": \"Work under pressure\",\n          \"description\": \"Optio aut nesciunt. Fugit tempore qui. Enim at dolores.\",\n          \"levels\": [\n            {\n              \"id\": {\n                \"$oid\": \"5cb09c4b8481724d2e58ae1c\"\n              },\n              \"seq_no\": 455,\n              \"description\": \"Cupiditate ut ad. Numquam ex fugiat. Id ea ut.\",\n              \"example_behaviour\": [\n                \"Placeat pariatur tempore.\",\n                \"Dignissimos quos laboriosam.\",\n                \"Aut eos sed.\"\n              ],\n              \"example_task\": [\n                \"Ex consequuntur aut.\",\n                \"Vel et officia.\",\n                \"Tenetur atque qui.\"\n              ]\n            },\n            {\n              \"id\": {\n                \"$oid\": \"5cb09c4b8481724d2e58ae1d\"\n              },\n              \"seq_no\": 281,\n              \"description\": \"In illum repudiandae. Minima ullam culpa. Rerum quia ut.\",\n              \"example_behaviour\": [\n                \"Odio minus incidunt.\",\n                \"Accusamus porro vel.\",\n                \"Est voluptatem voluptate.\"\n              ],\n              \"example_task\": [\n                \"Aliquam ipsa non.\",\n                \"Consequatur omnis ea.\",\n                \"Incidunt aperiam dignissimos.\"\n              ]\n            }\n          ]\n        },\n        {\n          \"id\": {\n            \"$oid\": \"5cb09c4b8481724d2e58ae17\"\n          },\n          \"name\": \"Confidence\",\n          \"description\": \"Molestiae quia dolor. Culpa quisquam minima. Sit recusandae cumque.\",\n          \"levels\": [\n            {\n              \"id\": {\n                \"$oid\": \"5cb09c4b8481724d2e58ae1e\"\n              },\n              \"seq_no\": 415,\n              \"description\": \"Eos aut excepturi. Aut ipsam quae. Quo sit laboriosam.\",\n              \"example_behaviour\": [\n                \"Quam itaque similique.\",\n                \"Facere quae quod.\",\n                \"Sunt deleniti aliquam.\"\n              ],\n              \"example_task\": [\n                \"Fugiat facilis vel.\",\n                \"Quasi maiores earum.\",\n                \"Qui vel optio.\"\n              ]\n            },\n            {\n              \"id\": {\n                \"$oid\": \"5cb09c4b8481724d2e58ae1f\"\n              },\n              \"seq_no\": 414,\n              \"description\": \"Modi rerum rem. Reprehenderit asperiores et. Voluptas fuga sit.\",\n              \"example_behaviour\": [\n                \"Et eligendi occaecati.\",\n                \"Corporis a quaerat.\",\n                \"Iusto eos et.\"\n              ],\n              \"example_task\": [\n                \"Pariatur repellendus ad.\",\n                \"Doloribus natus recusandae.\",\n                \"Cumque reiciendis nesciunt.\"\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"e1c2a0f5d117c69022f656011ff8a7ba\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "fc52115a-13f9-4faf-b08f-72a043c1370e",
+        "X-Runtime": "0.012314",
+        "Content-Length": "3506"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+    }
+  ]
+}

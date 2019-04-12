@@ -5,8 +5,15 @@
       "explanation": "Orders resource",
       "examples": [
         {
-          "description": "Getting static data",
-          "link": "users/getting_static_data.json",
+          "description": "Getting static data if user_id not provided",
+          "link": "users/getting_static_data_if_user_id_not_provided.json",
+          "groups": "all",
+          "route": "/snowflake/v1/get_static_data",
+          "method": "get"
+        },
+        {
+          "description": "Getting static data if user_id provided",
+          "link": "users/getting_static_data_if_user_id_provided.json",
           "groups": "all",
           "route": "/snowflake/v1/get_static_data",
           "method": "get"
