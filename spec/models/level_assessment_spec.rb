@@ -11,6 +11,7 @@ RSpec.describe LevelAssessment do
   it { should validate_presence_of(:track_category_id) }
   it { should validate_presence_of(:track_id) }
   it { should validate_presence_of(:level_id) }
+  it { should validate_presence_of(:cycle_id) }
   it { should validate_presence_of(:updated_by) }
 
 end

@@ -7,6 +7,7 @@ class LevelAssessment
   field :role_id,           type: Integer
   field :track_id,          type: Integer
   field :level_id,          type: Integer
+  field :cycle_id,          type: Integer
   field :updated_by,        type: String
   field :Comments,          type: String
   field :track_category_id, type: Integer
