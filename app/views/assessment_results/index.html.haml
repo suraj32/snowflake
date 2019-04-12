@@ -1,0 +1,16 @@
+.row.mb-3.mt-5
+  .col-7
+    %h3 Listing Results
+  
+%table#resultsTable.display.table.table-bordered.table-hover
+  %thead
+    %tr
+      %th Name
+      %th Total points
+      %th Current level
+  %tbody
+    - @assessment_results.each do |assessment_result|
+      %tr
+        %td= assessment_result.user.email
+        %td= assessment_result.total_points
+        %td= assessment_result.current_level
